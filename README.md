@@ -14,8 +14,10 @@
     UBC undergraduate students who try to choose one of the current sections of a course that they want to enroll. 
     To use the application, the user will input the subject area, course number, and the section number. After this,
     the application will get the data for the last five years, and filter it for the given section's professor, As 
-    an output, user will see the class average of the last five year for that section's professor, and other useful
-    insights like grade distributions, pass rates, and data visualizations.
+    an output, the user will see the class average of the last five year for that section's professor, and other useful
+    insights like grade distributions, pass rates, and data visualizations. Also, the user will be able to save these
+    results in a list, therefore, the user will be able to compare the data for different sections and make a decision 
+    based on this data.
 
 - **Why is this project of interest to you?**
 
