@@ -20,7 +20,15 @@
     based on this data.
 
 - **Why is this project of interest to you?**
-
+    
+    At the beginning of the year, one of the greatest challenges that I had was to choose the right courses that I can
+    succeed. To identify these courses, first, I found the courses that I should take. After that, I find the 
+    instructors for the courses and look at the class averages and grade distributions of their class in the 
+    previous years. This was a time consuming process for me. When I came to UBC, I noticed that most of my friends
+    went through the same process as me. That moment, I noticed that this process is a systematic and iterative process.
+    Therefore, I wanted to automate this process by writing a desktop application. This way, it would be much faster and
+    easier for me and my friends to choose our courses.
+    
     
     
 
