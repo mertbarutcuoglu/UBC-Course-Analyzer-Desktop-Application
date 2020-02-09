@@ -34,9 +34,9 @@
 - As a user, I want to be able to get the five year average for the course that I input, thought by the professor of the 
 section that I input.
 
-- As a user, I want to be able to add the output for a course to a course list.
+- As a user, I want to be able to add a course and its data to a course list.
 
 - As a user, I want to be able to remove a course from the course list.
 
-- As a user, I want to be able to add multiple courses to a course list, and view them to compare the data for different 
-courses and/or sections.
+- As a user, I want to be able to add multiple courses to a course list, and view the list to compare the data for 
+different courses and/or sections.
