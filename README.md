@@ -40,3 +40,4 @@ section that I input.
 
 - As a user, I want to be able to add multiple courses to a course list, and view the list to compare the data for 
 different courses and/or sections.
+
