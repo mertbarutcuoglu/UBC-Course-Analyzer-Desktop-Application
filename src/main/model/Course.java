@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class Course {
     private static String API_BASE_URL = "https://ubcgrades.com/api/grades/"; // API URL to perform requests
     private static String UBC_BASE_URL = "https://courses.students.ubc.ca/cs/courseschedule?";
+
     private String courseID;
     private String courseNumber;
     private String courseSection;
@@ -23,6 +25,11 @@ public class Course {
     private List<Double> courseAveragesForYears;
     private Double courseFiveYearAverage;
 
+    /*
+     * REQUIRES: given courseID, courseNumber and courseSection are for an actual course on SSC
+     * EFFECTS: constructs a course with given courseID, courseNumber and courseSection. Creates a course URL
+     *          and parses professor name. Retrieves and calculates the five year average of the course.
+     */
     public Course(String courseID, String courseNumber, String courseSection) {
         this.courseID = courseID.toUpperCase();
         this.courseNumber = courseNumber;
@@ -53,6 +60,9 @@ public class Course {
         return courseFiveYearAverage;
     }
 
+    // REQUIRES: there must be a course on SSC with the given parameters
+    // MODIFIES: this
+    // EFFECTS: creates SSC URL for the course and returns it
     private String createCourseUrl() {
         String courseURL = UBC_BASE_URL + "pname=subjarea&tname=subj-section&dept=";
         courseURL = courseURL + courseID + "&course=" + courseNumber;
@@ -60,6 +70,8 @@ public class Course {
         return courseURL;
     }
 
+    // MODIFIES: this
+    // EFFECTS: retrieves name of the professor for the course from SSC and returns it
     private String retrieveProfName() {
         WebClient client = new WebClient();
         client.getOptions().setCssEnabled(false);
@@ -77,6 +89,9 @@ public class Course {
         return profName;
     }
 
+    // REQUIRES: responseArray is not empty
+    // MODIFIES: this
+    // EFFECTS: retrieves the average for the course for the given year's winter term
     private List<Double> retrieveAverageForYear(String year) {
         String term = year + "W";
         String apiUrl = API_BASE_URL + term + "/" + courseID + "/" + courseNumber;
@@ -107,7 +122,7 @@ public class Course {
         return termAverages;
     }
 
-
+    // EFFECTS: retrieves and returns the course averages for 5 winter terms between 2014-2018
     private List<Double> retrieveAverageForFiveYears() {
         List<Double> averageForFiveYears = new ArrayList<>();
         for (int i = 2014; i < 2019; i++) {
@@ -117,6 +132,7 @@ public class Course {
         return averageForFiveYears;
     }
 
+    // EFFECTS: calculates and returns the five year average for the course
     private Double calculateFiveYearAverage() {
         double sum = 0;
         int count = 0;
