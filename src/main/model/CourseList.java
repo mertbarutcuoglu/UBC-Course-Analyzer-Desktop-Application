@@ -25,4 +25,7 @@ public class CourseList {
         listOfCourses.remove(index);
     }
 
+    public List<Course> getListOfCourses() {
+        return listOfCourses;
+    }
 }
