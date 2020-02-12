@@ -4,64 +4,76 @@ import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class CourseDetailsParserTest {
-    CourseDetailsParser detailsParser;
+    CourseDetailsParser parser;
 
     @BeforeEach
-    public void runBefore(){
-        detailsParser = new CourseDetailsParser();
+    public void runBefore() {
+        parser = new CourseDetailsParser();
     }
 
     @Test
-    public void testRetrieveProfNameWithNoErrors(){
-        String profName = null;
+    public void testParseAverageNoErrors() {
+        File jsonFile = new File("src/test/model/json/2018W_PHIL_220.json");
+        String response = "";
+
+        Scanner scanner = null;
         try {
-            profName = detailsParser.retrieveProfName("PHIL","220", "005");
-        } catch (IOException e) {
-            fail("IOException occurred!");
-        } catch (IndexOutOfBoundsException e){
-            fail("IndexOutOfBondsException occurred!");
+            scanner = new Scanner(jsonFile);
+        } catch (FileNotFoundException e) {
+            fail("File not found!");
         }
-        assertEquals("ICHIKAWA, JONATHAN", profName);
-    }
 
-    @Test
-    public void testRetrieveProfNameWithInvalidInfo(){
-        // IndexOutOfBondsException occurs because of the invalid course detail
-        String profName = null;
-        try {
-            profName = detailsParser.retrieveProfName("ASCZ","1230", "123");
-        } catch (IOException e) {
-            fail("IOException occurred!");
-        } catch (IndexOutOfBoundsException e){
-            System.out.println("Exception caught!");
+        while (scanner.hasNext()) {
+            response = response + scanner.nextLine();
         }
-    }
-
-
-    @Test
-    public void testRetrieveFiveYearAverage(){
-        List<Double> courseAverages = new ArrayList<>();
+        scanner.close();
         List<Double> expectedAverages = new ArrayList<>();
-        expectedAverages.add(79.96);
         expectedAverages.add(79.65);
         expectedAverages.add(77.87);
+
+        List<Double> averages = new ArrayList<>();
         try {
-            courseAverages = detailsParser.retrieveFiveYearAverage("PHIL", "220", "ICHIKAWA, JONATHAN");
+            averages = parser.parseAverage(response, "ICHIKAWA, JONATHAN");
         } catch (ParseException e) {
-           fail("Parse exception occured!");
-        } catch (IOException e) {
-            fail("IOException occured");
+            fail("Parsing error!");
         }
-        assertEquals(courseAverages, expectedAverages);
+        assertEquals(averages, expectedAverages);
     }
 
+    @Test
+    public void testParseAverageWithInvalidJSONResponse(){
+        File jsonFile = new File("src/test/model/json/invalidJSONResponse.json");
+        String response = "";
 
-}
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(jsonFile);
+        } catch (FileNotFoundException e) {
+            fail("File not found!");
+        }
+
+        while (scanner.hasNext()) {
+            response = response + scanner.nextLine();
+        }
+        scanner.close();
+
+        try {
+            List<Double> averages = parser.parseAverage(response, "ICHIKAWA, JONATHAN");
+            fail("Didn't catch the exception!");
+        } catch (ParseException e) {
+            System.out.println("Catched the ParseException!");
+        }
+    }
+
+    }
+
