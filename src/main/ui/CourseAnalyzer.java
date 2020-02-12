@@ -3,9 +3,12 @@ package ui;
 import model.Course;
 import model.CourseDetailsParser;
 import model.CourseList;
+import model.DataRetriever;
 import org.json.simple.parser.ParseException;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,11 +19,11 @@ import java.util.Scanner;
 public class CourseAnalyzer {
     private Scanner input;
     private CourseList courseList;
-    private CourseDetailsParser courseDetailsParser;
+    private static String apiBaseURL = "https://ubcgrades.com/api/grades/"; // API URL to perform requests;
 
     public CourseAnalyzer() {
         this.courseList = new CourseList();
-        this.courseDetailsParser = new CourseDetailsParser();
+        displayWelcomeMessage();
         runCourseAnalyzer();
     }
 
@@ -69,7 +72,7 @@ public class CourseAnalyzer {
         List<Course> courseList = this.courseList.getListOfCourses();
         int count = 1;
         for (Course course : courseList) {
-            System.out.println("COURSE " + Integer.toString(count));
+            System.out.println("COURSE " + count);
             displayCourse(course);
             count++;
         }
@@ -97,23 +100,29 @@ public class CourseAnalyzer {
     // EFFECTS: analyzes the given course
     // MODIFIES: this
     private void analyzeCourse() throws ParseException, IndexOutOfBoundsException, IOException {
-        System.out.println("Enter the course ID (eg. CPSC: )");
-        String courseID = input.next();
+        List<String> inputs = getInputsForCourse();
+        String courseID = inputs.get(0);
+        String courseNo = inputs.get(1);
+        String courseSection = inputs.get(2);
 
-        System.out.println("Enter the course number: ");
-        String courseNumber = input.next();
+        DataRetriever retriever = new DataRetriever();
+        String profName = retriever.retrieveProfName(courseID, courseNo, courseSection);
 
-        System.out.println("Enter section number: ");
-        String courseSection = input.next();
+        List<Double> fiveYearAverage = new ArrayList<>();
 
-        System.out.println("Processing the information...");
+        // Requests average for five winter terms from 2014 to 2019, not including 2019
+        for (int i = 2014; i < 2019; i++) {
+            String term = i + "W";
+            String apiUrl = apiBaseURL + term + "/" + courseID + "/" + courseNo;
+            String apiResponse = retriever.getResponseAsStringFromURL(apiUrl);
+            CourseDetailsParser parser = new CourseDetailsParser();
+            List<Double> termAverages = parser.parseAverage(apiResponse, profName);
+            fiveYearAverage.addAll(termAverages);
+        }
 
-        String profName = courseDetailsParser.retrieveProfName(courseID, courseNumber, courseSection);
-
-        List<Double> fiveYearAverage = courseDetailsParser.retrieveFiveYearAverage(courseID, courseNumber, profName);
-
-        Course course = new Course(courseID, courseNumber, courseSection, profName, fiveYearAverage);
+        Course course = new Course(courseID, courseNo, courseSection, profName, fiveYearAverage);
         displayCourse(course);
+
         System.out.println("Do you want to add this course to your course list? (Y for yes/ N for no)");
 
         String addToCourseList = input.next().toUpperCase();
@@ -121,6 +130,25 @@ public class CourseAnalyzer {
             courseList.addCourse(course);
         }
         System.out.println("Redirecting to main menu...");
+    }
+
+    private List<String> getInputsForCourse() {
+        List<String> inputs = new ArrayList<>();
+
+        System.out.println("Enter the course ID (eg. CPSC: )");
+        String courseID = input.next();
+
+        System.out.println("Enter the course number: ");
+        String courseNo = input.next();
+
+        System.out.println("Enter section number: ");
+        String courseSection = input.next();
+
+        inputs.add(courseID);
+        inputs.add(courseNo);
+        inputs.add(courseSection);
+        System.out.println("Processing the information...");
+        return inputs;
     }
 
     //EFFECTS: displays course information
