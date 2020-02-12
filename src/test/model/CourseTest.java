@@ -12,13 +12,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class CourseTest {
     Course course;
-    CourseDetailsParser courseDetailsParser;
 
     @Test
     public void testCourse(){
         // expecting to have no errors with valid course details
         // exceptions are tested for CourseDetailsParser
-        courseDetailsParser = new CourseDetailsParser();
         String profName = "ICHIKAWA, JONATHAN";
 
 

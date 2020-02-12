@@ -1,10 +1,8 @@
 package model;
 
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // Tests for CourseList class
 public class CourseListTest {
-    CourseDetailsParser detailsParser;
     CourseList testCourseList;
     Course testCourse1;
     Course testCourse2;
@@ -20,35 +17,25 @@ public class CourseListTest {
     @BeforeEach
     public void runBefore() {
         testCourseList = new CourseList();
-        detailsParser = new CourseDetailsParser();
+        String profName = "ICHIKAWA, JONATHAN";
 
-        String profName1 = null;
-        try {
-             profName1 = detailsParser.retrieveProfName("PHIL", "220", "005");
-        } catch (IOException e) {
-            System.out.println("IOException occurred!");
-        }
-        List<Double> averages1 = new ArrayList<>();
-        try {
-            averages1 = detailsParser.retrieveFiveYearAverage("PHIL", "220", profName1);
-        } catch (ParseException | IOException e) {
-            System.out.println("Exception occurred!");
-        }
-        testCourse1 = new Course("PHIL", "220", "005", profName1, averages1);
 
-        String profName2 = null;
-        try {
-            profName2 = detailsParser.retrieveProfName("CPSC", "121", "202");
-        } catch (IOException e) {
-            System.out.println("IOException occurred!");
-        }
-        List<Double> averages2 = new ArrayList<>();
-        try {
-            averages2 = detailsParser.retrieveFiveYearAverage("PHIL", "220", profName2);
-        } catch (ParseException | IOException e) {
-            System.out.println("Exception occurred!");
-        }
-        testCourse2 = new Course("CPSC", "121", "202", profName2, averages2);
+        List<Double> courseAverages = new ArrayList<>();
+        courseAverages.add(79.65);
+        courseAverages.add(77.87);
+        courseAverages.add(79.96);
+
+        testCourse1 = new Course("PHIL", "220", "005", profName, courseAverages);
+
+        String profName2 = "BELLEVILE, PATRICE";
+
+
+        List<Double> courseAverages2 = new ArrayList<>();
+        courseAverages.add(73.05);
+        courseAverages.add(71.85);
+        courseAverages.add(74.26);
+
+        testCourse2 = new Course("CPSC", "121", "202", profName2, courseAverages2);
     }
 
     @Test
