@@ -19,19 +19,14 @@ public class CourseTest {
         // expecting to have no errors with valid course details
         // exceptions are tested for CourseDetailsParser
         courseDetailsParser = new CourseDetailsParser();
-        String profName = null;
-        try {
-             profName = courseDetailsParser.retrieveProfName("PHIL", "220","005");
-        } catch (IOException e) {
-            fail("IOException occurred");
-        }
+        String profName = "ICHIKAWA, JONATHAN";
+
 
         List<Double> courseAverages = new ArrayList<>();
-        try {
-            courseAverages = courseDetailsParser.retrieveFiveYearAverage("PHIL", "220", profName);
-        } catch (ParseException | IOException e) {
-            fail("Exception occurred");
-        }
+        courseAverages.add(79.65);
+        courseAverages.add(77.87);
+        courseAverages.add(79.96);
+
         course = new Course("PHIL", "220", "005", profName, courseAverages);
         double courseAverage = (79.65 + 77.87 + 79.96) / 3.0;
         assertEquals(course.getCourseID(), "PHIL");
