@@ -15,8 +15,6 @@ public class CourseTest {
 
     @Test
     public void testCourse(){
-        // expecting to have no errors with valid course details
-        // exceptions are tested for CourseDetailsParser
         String profName = "ICHIKAWA, JONATHAN";
 
 
@@ -31,6 +29,27 @@ public class CourseTest {
         assertEquals(course.getCourseNumber(), "220");
         assertEquals(course.getCourseSection(), "005");
         assertEquals(course.getProfName(), "ICHIKAWA, JONATHAN");
+        assertEquals(course.getCourseFiveYearAverage(), courseAverage) ;
+    }
+
+
+    @Test
+    public void testCourseIncludingZeroAverage(){
+        String profName = "BELLEVILE, PATRICE";
+
+
+        List<Double> courseAverages = new ArrayList<>();
+        courseAverages.add(69.65);
+        courseAverages.add(71.87);
+        courseAverages.add(72.96);
+        courseAverages.add(0.0);
+
+        course = new Course("CPSC", "121", "202", profName, courseAverages);
+        double courseAverage = (69.65 + 71.87 + 72.96) / 3.0;
+        assertEquals(course.getCourseID(), "CPSC");
+        assertEquals(course.getCourseNumber(), "121");
+        assertEquals(course.getCourseSection(), "202");
+        assertEquals(course.getProfName(), "BELLEVILE, PATRICE");
         assertEquals(course.getCourseFiveYearAverage(), courseAverage) ;
     }
 
