@@ -1,14 +1,18 @@
 package model;
 
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 // Tests for CourseList class
 public class CourseListTest {
+    CourseDetailsParser detailsParser;
     CourseList testCourseList;
     Course testCourse1;
     Course testCourse2;
@@ -16,8 +20,35 @@ public class CourseListTest {
     @BeforeEach
     public void runBefore() {
         testCourseList = new CourseList();
-        testCourse1 = new Course("PHIL", "220", "005");
-        testCourse1 = new Course("CPSC", "121", "202");
+        detailsParser = new CourseDetailsParser();
+
+        String profName1 = null;
+        try {
+             profName1 = detailsParser.retrieveProfName("PHIL", "220", "005");
+        } catch (IOException e) {
+            System.out.println("IOException occurred!");
+        }
+        List<Double> averages1 = new ArrayList<>();
+        try {
+            averages1 = detailsParser.retrieveFiveYearAverage("PHIL", "220", profName1);
+        } catch (ParseException | IOException e) {
+            System.out.println("Exception occurred!");
+        }
+        testCourse1 = new Course("PHIL", "220", "005", profName1, averages1);
+
+        String profName2 = null;
+        try {
+            profName2 = detailsParser.retrieveProfName("CPSC", "121", "202");
+        } catch (IOException e) {
+            System.out.println("IOException occurred!");
+        }
+        List<Double> averages2 = new ArrayList<>();
+        try {
+            averages2 = detailsParser.retrieveFiveYearAverage("PHIL", "220", profName2);
+        } catch (ParseException | IOException e) {
+            System.out.println("Exception occurred!");
+        }
+        testCourse2 = new Course("CPSC", "121", "202", profName2, averages2);
     }
 
     @Test
@@ -79,5 +110,10 @@ public class CourseListTest {
         assertFalse(listOfCourses.contains(testCourse2));
         assertTrue(listOfCourses.contains(testCourse1));
     }
+
 }
+
+
+
+
 

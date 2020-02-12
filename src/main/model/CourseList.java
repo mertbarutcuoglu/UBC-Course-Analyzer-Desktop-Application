@@ -22,7 +22,7 @@ public class CourseList {
     // EFFECTS: removes the course at given index, i
     // REQUIRES: index < listOfCourse.size()
     public void removeCourse(int index) {
-        listOfCourses.remove(index);
+        listOfCourses.remove(index - 1);
     }
 
     public List<Course> getListOfCourses() {
