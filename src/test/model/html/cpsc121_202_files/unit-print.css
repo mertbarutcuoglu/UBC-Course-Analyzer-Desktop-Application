@@ -1,0 +1,87 @@
+@media print {
+ 
+  #ttpopup{
+    display: none;
+  }
+  
+  #term1 {
+    page-break-after:always
+  }
+  
+  .time-table a:link:after, 
+  .time-table a:visited:after,
+  .accordion-heading a:link:after,
+  .accordion-heading a:visited:after { 
+    content:""; font-size:90%; 
+  }
+  
+  .accordion-group {
+    border: none;
+  }
+  
+  .do-not-print, 
+  #ubc7-unit,
+  #student-details,
+  #ubc7-footer {
+    display: none;
+    visibility:hidden;
+  }
+  
+  .time-table a { 
+    text-decoration:none; 
+  }
+  
+  .time-table th, 
+  .time-table td,
+  .time-table col {
+    display:table-cell !important; 
+    visibility:visible !important;
+  }
+  
+  .time-table tr.unresponsive-day-headers {
+    display:table-row; 
+    visibility:visible !important;
+  }
+    
+  .time-table th.active-day, 
+  .time-table td.active-day,
+  .time-table th.span1, 
+  .time-table td.span1 {
+    visibility:visible;
+    display:table-cell;
+  }
+
+  .time-table tr.responsive-day-buttons ,
+  .time-table tr.responsive-day-buttons th {
+    visibility:hidden !important;
+    display:none;
+  }   
+  
+  
+  .student-details table tr td,
+  table.legend tr{
+    background: #FFFFFF  !important;
+  }
+
+  div.fullscreen {
+    visibility:hidden;
+    display:none;
+  }
+  /* 
+  Scrollbars don't work when printing, so we need to show the overflow.
+  Note: overflow-x:visible doesn't seem to work without overflow-y:visible 
+  */
+  .accordion-body.collapse {
+    overflow: visible;
+  }
+
+  .accordion-inner {
+    overflow-x: visible;
+  }
+  
+ .accordion-inner table.span10{
+   background: #ffffff;
+  }
+  
+  
+}

@@ -1,0 +1,147 @@
+.one{
+  background: #D7E0E7 ;
+}
+
+.two {
+  background: #FFFFFF  ;
+}
+
+/* Large desktop */ 
+@media (min-width: 1200px) {  
+  
+  #cwl{
+    margin-top: 10px;
+    margin-bottom:-10px;
+  }
+
+}
+
+/* Portrait tablet to landscape and desktop */ 
+@media (min-width: 980px) and (max-width: 1199px) {  
+  
+  #cwl{
+    margin-top: 6px;
+    margin-bottom:-10px;
+  }
+  
+} 
+
+
+/* Portrait tablet to landscape and desktop */ 
+@media (min-width: 768px) and (max-width: 979px) {  
+
+  ul.breadcrumb  div.pull-right div.btn-group ul.dropdown-menu {
+    margin-top:-3px !important;
+  } 
+
+  #cwl, #cwl-logout{
+    float: left;
+  padding-left:18px;
+  }
+  #cwl{
+    padding-top:5px;
+  }
+   #cwl-logout{
+   padding-bottom:5px;
+   }
+ 
+}
+
+/* Smartphone to portrait tablet */ 
+@media (max-width: 767px) { 
+  
+  
+  div.docs-sidebar.worklist-sidebar {
+    width:100%;
+  }
+  
+  .student-details {
+    width:100%;
+  }
+  
+  #cwl, #cwl-logout {
+    float: left;
+  padding-left:18px;
+  }
+  
+  #cwl {
+    padding-top:5px;
+    margin-bottom:-10px;
+  }
+  
+  #cwl-logout {
+   padding-bottom:5px;
+   }
+  
+  ul.breadcrumb  div.pull-right div.btn-group ul.dropdown-menu {
+    margin-top:0 !important;
+  }
+   
+  .time-table th, 
+  .time-table td,
+  .time-table col,
+  .time-table tr.unresponsive-day-headers {
+    display:none; 
+    visibility:hidden;
+  }
+    
+  .time-table th.active-day, 
+  .time-table td.active-day,
+  .time-table th.span1, 
+  .time-table td.span1 {
+    visibility:visible;
+    display:table-cell;
+  }
+
+  .time-table tr.responsive-day-buttons {
+    visibility:visible !important;
+    display:table-row !important;
+  }
+  
+  .time-table tr.responsive-day-buttons th {
+    visibility:visible;
+    display:table-cell;
+    text-align: center;
+  }
+      
+  .time-table tr.responsive-day-buttons button {
+    margin-top:5px !important;
+  }
+   
+
+/* End responsive table */
+   
+}
+
+ 
+@media  (max-width: 600px) {
+  
+  div.pull-right div.btn-group{
+    margin-left: 0 !important;
+  }
+  
+  .accordion-comments{
+    width:98%;
+  }
+  
+}
+ 
+@media  (max-width: 400px) {
+
+  table.legend td, table.legend td.span2 , table.legend th { 
+      /* Behave  like a "row" */
+    display:table-row;
+    border: none;
+    position: relative;
+    width: 96%;
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+}
+
+/* smartphones to smaller feature phones */ 
+@media  (max-width: 319px) {
+  
+  
+  
+}
