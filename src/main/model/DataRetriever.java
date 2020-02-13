@@ -56,22 +56,16 @@ public class DataRetriever {
     // REQUIRES: active internet connection
     // MODIFIES: this
     // EFFECTS: retrieves name of the professor for the  course from SSC and returns it
-    public String retrieveProfName(String courseID, String courseNo, String courseSection)
+    public HtmlPage retrieveProfName(String courseID, String courseNo, String courseSection)
             throws IndexOutOfBoundsException, IOException {
 
         String courseURL = generateCourseURL(courseID, courseNo, courseSection);
         WebClient client = new WebClient();
         client.getOptions().setCssEnabled(false);
         client.getOptions().setJavaScriptEnabled(false);
-        String profName = null;
-
         HtmlPage page = client.getPage(courseURL);
-        HtmlElement tableElement = (HtmlElement) page.getByXPath("//table").get(2);
-        HtmlElement profNameTable = (HtmlElement) tableElement.getChildNodes().get(0).getChildNodes().get(0);
-        HtmlElement tableData = (HtmlElement) profNameTable.getChildNodes().get(1);
-        profName = tableData.getChildNodes().get(0).asText();
 
-        return profName;
+        return page;
     }
 
 }

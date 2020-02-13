@@ -1,5 +1,7 @@
 package model;
 
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -38,4 +40,12 @@ public class CourseDetailsParser {
         return termAverages;
     }
 
+    // EFFECTS: parses the professor name from the given html page and returns it
+    public String parseProfName(HtmlPage profNamePage) {
+        HtmlElement tableElement = (HtmlElement) profNamePage.getByXPath("//table").get(2);
+        HtmlElement profNameTable = (HtmlElement) tableElement.getChildNodes().get(0).getChildNodes().get(0);
+        HtmlElement tableData = (HtmlElement) profNameTable.getChildNodes().get(1);
+        String profName = tableData.getChildNodes().get(0).asText();
+        return profName;
+    }
 }

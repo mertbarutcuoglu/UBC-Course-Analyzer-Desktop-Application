@@ -1,12 +1,12 @@
 package ui;
 
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import model.Course;
 import model.CourseDetailsParser;
 import model.CourseList;
 import model.DataRetriever;
 import org.json.simple.parser.ParseException;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,17 +105,18 @@ public class CourseAnalyzer {
         String courseNo = inputs.get(1);
         String courseSection = inputs.get(2);
 
+        CourseDetailsParser parser = new CourseDetailsParser();
+
         DataRetriever retriever = new DataRetriever();
-        String profName = retriever.retrieveProfName(courseID, courseNo, courseSection);
+        HtmlPage profNamePage = retriever.retrieveProfName(courseID, courseNo, courseSection);
+        String profName = parser.parseProfName(profNamePage);
 
         List<Double> fiveYearAverage = new ArrayList<>();
-
         // Requests average for five winter terms from 2014 to 2019, not including 2019
         for (int i = 2014; i < 2019; i++) {
             String term = i + "W";
             String apiUrl = apiBaseURL + term + "/" + courseID + "/" + courseNo;
             String apiResponse = retriever.getResponseAsStringFromURL(apiUrl);
-            CourseDetailsParser parser = new CourseDetailsParser();
             List<Double> termAverages = parser.parseAverage(apiResponse, profName);
             fiveYearAverage.addAll(termAverages);
         }
@@ -123,13 +124,17 @@ public class CourseAnalyzer {
         Course course = new Course(courseID, courseNo, courseSection, profName, fiveYearAverage);
         displayCourse(course);
 
+        presentAddCourseOption(course);
+        System.out.println("Redirecting to main menu...");
+    }
+
+    private void presentAddCourseOption(Course course) {
         System.out.println("Do you want to add this course to your course list? (Y for yes/ N for no)");
 
         String addToCourseList = input.next().toUpperCase();
         if (addToCourseList.equals("Y")) {
             courseList.addCourse(course);
         }
-        System.out.println("Redirecting to main menu...");
     }
 
     private List<String> getInputsForCourse() {
