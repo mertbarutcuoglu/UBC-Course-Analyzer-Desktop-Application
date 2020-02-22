@@ -6,8 +6,13 @@ import model.CourseDetailsParser;
 import model.CourseList;
 import model.DataRetriever;
 import org.json.simple.parser.ParseException;
+import persistence.Reader;
+import persistence.Writer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,7 +29,23 @@ public class CourseAnalyzer {
     public CourseAnalyzer() {
         this.courseList = new CourseList();
         displayWelcomeMessage();
+        try {
+            reloadData();
+        } catch (IOException e) {
+            System.out.println("Couldn't load the previous course list!");
+        }
         runCourseAnalyzer();
+    }
+
+    // TODO: Documentation
+    private void reloadData() throws IOException {
+        input = new Scanner(System.in);
+        System.out.println("Do you want to reload your course list from the previous session? (Yes(Y) / No(N))");
+        String reloadDecision = input.next().toUpperCase();
+        if (reloadDecision.equals("Y")) {
+            courseList = Reader.readCourses(new File("./data/txt/savedCourses.txt"));
+        }
+
     }
 
     // MODIFIES: this
@@ -32,15 +53,13 @@ public class CourseAnalyzer {
     private void runCourseAnalyzer() {
         boolean isRunning = true;
         String command = null;
-        input = new Scanner(System.in);
 
         while (isRunning) {
             displayMenu();
             command = input.next();
 
             if (command.equals("3")) {
-                isRunning = false;
-                System.out.println("Quiting...");
+                isRunning = quit();
             } else {
                 try {
                     processCommand(command);
@@ -53,6 +72,33 @@ public class CourseAnalyzer {
                 }
             }
         }
+    }
+
+    // TODO: documentation
+    private boolean quit() {
+        boolean isRunning;
+        System.out.println("Do you want to save your current save list for future use ? (Yes(Y) / No(N))");
+        String saveDecision = input.next().toUpperCase();
+        System.out.println(saveDecision);
+        if (saveDecision.equals("Y")) {
+            try {
+                saveCourseList();
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found!");
+            } catch (UnsupportedEncodingException e) {
+                System.out.println("Unsupported file encoding!");
+            }
+        }
+
+        isRunning = false;
+        System.out.println("Quiting...");
+        return isRunning;
+    }
+
+    private void saveCourseList() throws FileNotFoundException, UnsupportedEncodingException {
+        Writer writer = new Writer(new File("./data/txt/savedCourses.txt"));
+        writer.write(courseList);
+        writer.close();
     }
 
     // MODIFIES: this
@@ -141,7 +187,7 @@ public class CourseAnalyzer {
         List<String> inputs = new ArrayList<>();
 
         System.out.println("Enter the course ID (eg. CPSC: )");
-        String courseID = input.next();
+        String courseID = input.next().toUpperCase();
 
         System.out.println("Enter the course number: ");
         String courseNo = input.next();

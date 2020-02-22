@@ -1,9 +1,7 @@
 package model;
 
 import com.gargoylesoftware.htmlunit.*;
-import com.gargoylesoftware.htmlunit.html.HtmlHtml;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.parser.HTMLParser;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,7 +26,7 @@ public class CourseDetailsParserTest {
 
     @Test
     public void testParseAverageNoErrors() {
-        File jsonFile = new File("src/test/model/json/2018W_PHIL_220.json");
+        File jsonFile = new File("./data/json/2018W_PHIL_220.json");
         String response = "";
 
         Scanner scanner = null;
@@ -58,7 +55,7 @@ public class CourseDetailsParserTest {
 
     @Test
     public void testParseAverageWithInvalidJSONResponse(){
-        File jsonFile = new File("src/test/model/json/invalidJSONResponse.json");
+        File jsonFile = new File("./data/json/invalidJSONResponse.json");
         String response = "";
 
         Scanner scanner = null;
@@ -83,7 +80,7 @@ public class CourseDetailsParserTest {
 
     @Test
     public void testParseProfNameWithNoError() {
-        File htmlPageFile = new File("src/test/model/html/cpsc121_202.html");
+        File htmlPageFile = new File("./data/html/cpsc121_202.html");
         String htmlPageString = null;
 
         Scanner scanner = null;
