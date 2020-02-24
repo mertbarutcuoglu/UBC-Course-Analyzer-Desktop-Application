@@ -48,6 +48,30 @@ public class CourseTest {
         assertEquals(course.getCourseFiveYearAverage(), courseAverage) ;
     }
 
+    @Test
+    public void testToString(){
+        String profName = "ICHIKAWA, JONATHAN";
+
+
+        List<Double> courseAverages = new ArrayList<>();
+        courseAverages.add(0.0);
+        courseAverages.add(0.0);
+        courseAverages.add(79.65);
+        courseAverages.add(77.87);
+        courseAverages.add(79.96);
+
+        course = new Course("PHIL", "220", "005", profName, courseAverages);
+
+        String expectedCourseString = "[ course id: PHIL; course number: 220; course section: 005; " +
+                "professor: ICHIKAWA, JONATHAN; 2014 average: 0.00; 2015 average: 0.00; " +
+                "2016 average: 79.65; 2017 average: 77.87; 2018 average: 79.96]";
+
+        String courseString = course.toString();
+
+        assertEquals(expectedCourseString, courseString);
+
+    }
+
 }
 
 

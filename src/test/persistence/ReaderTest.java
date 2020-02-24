@@ -11,6 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class ReaderTest {
+
+    @Test
+    void testReader(){
+        Reader testReader = new Reader();
+        assertEquals(";", testReader.DELIMETER);
+    }
     @Test
     void testReadAccountsSuccess() {
         try {

@@ -16,6 +16,11 @@ import java.util.List;
 public class Reader {
     public static final String DELIMETER = ";";
 
+    // EFFECTS: constructs the reader
+    public Reader(){
+
+    }
+
     // EFFECTS: returns CourseList that was parsed from the file
     public static CourseList readCourses(File file) throws IOException {
         List<String> fileContent = readFile(file);

@@ -80,7 +80,7 @@ public class Course implements Saveable {
         List<String> fiveYearAverageString = new ArrayList<>();
 
         for (Double average: courseAveragesForYears) {
-            String averageString = String.format("%2.f", average);
+            String averageString = String.format("%.2f", average);
             fiveYearAverageString.add(averageString);
         }
 
