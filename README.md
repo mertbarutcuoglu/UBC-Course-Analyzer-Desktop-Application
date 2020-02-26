@@ -41,3 +41,9 @@ section that I input.
 - As a user, I want to be able to add multiple courses to a course list, and view the list to compare the data for 
 different courses and/or sections.
 
+- As a user, when I select the quit option from the menu, I want the option to save my course list for 
+future use.
+
+- As a user, when I start the application, I want the option to load my course list from the my previous usage.
+
+
