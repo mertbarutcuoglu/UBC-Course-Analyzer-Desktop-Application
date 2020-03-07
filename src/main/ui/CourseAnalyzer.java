@@ -8,10 +8,8 @@ import model.DataRetriever;
 import org.json.simple.parser.ParseException;
 import persistence.Reader;
 import persistence.Writer;
-import sun.tools.jps.Jps;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,9 +26,6 @@ import java.util.Scanner;
 
 // Course Analyzer desktop application
 public class CourseAnalyzer extends JFrame implements ActionListener {
-    public static final int MAIN_WIDTH = 1000;
-    public static final int MAIN_HEIGHT = 1000;
-
     public static final int WELCOME_WIDTH = 400;
     public static final int WELCOME_HEIGHT = 125;
 
@@ -43,7 +38,7 @@ public class CourseAnalyzer extends JFrame implements ActionListener {
         this.courseList = new CourseList();
 
         displayWelcomeMenu();
-        runCourseAnalyzer();
+        //runCourseAnalyzer();
     }
 
 
@@ -73,41 +68,12 @@ public class CourseAnalyzer extends JFrame implements ActionListener {
     }
 
     // TODO: Documentation
-    private void reloadData() throws IOException {
-        input = new Scanner(System.in);
-        System.out.println("Do you want to reload your course list from the previous session? (Yes(Y) / No(N))");
-        String reloadDecision = input.next().toUpperCase();
-        if (reloadDecision.equals("Y")) {
-            courseList = Reader.readCourses(new File("./data/txt/savedCourses.txt"));
-        }
-
+    private void displayMainMenu() {
+        MainMenu mainMenu = new MainMenu(courseList);
+        mainMenu.setVisible(true);
+        dispose();
     }
 
-    // MODIFIES: this
-    // EFFECTS: takes the input from the user
-    private void runCourseAnalyzer() {
-        boolean isRunning = true;
-        String command = null;
-
-        while (isRunning) {
-            displayMenu();
-            command = input.next();
-
-            if (command.equals("3")) {
-                isRunning = quit();
-            } else {
-                try {
-                    processCommand(command);
-                } catch (ParseException e) {
-                    System.out.println("Parsing error! Please try again.");
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Couldn't find the given course");
-                } catch (IOException e) {
-                    System.out.println("Couldn't connect to the server.");
-                }
-            }
-        }
-    }
 
     // TODO: documentation
     private boolean quit() {
@@ -247,26 +213,15 @@ public class CourseAnalyzer extends JFrame implements ActionListener {
         System.out.println("--------------------------------------------------------");
     }
 
-    //EFFECTS: displays welcome message and explains the usage of UI
-    private void displayWelcomeMessage() {
-        System.out.println("Welcome to Course Analyzer!");
-        System.out.println("Please choose from the following options by typing its option number.");
-    }
-
-    // EFFECTS: Displays menu of options
-    private void displayMenu() {
-        System.out.println("\n1. Analyze a course.");
-        System.out.println("2. My courses");
-        System.out.println("3. Quit");
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("newSession")) {
-            System.out.println("new session");
+            displayMainMenu();
         } else if (e.getActionCommand().equals("loadData")) {
             try {
                 courseList = Reader.readCourses(new File("./data/txt/savedCourses.txt"));
+                displayMainMenu();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Error! No saved data found!");
             }
