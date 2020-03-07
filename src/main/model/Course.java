@@ -72,6 +72,13 @@ public class Course implements Saveable {
         return sum / count;
     }
 
+    // EFFECTS: returns the course name as courseID courseNumber courseSection
+    public String getCourseFullName() {
+        String courseName;
+        courseName = courseID + " " + courseNumber + " " + courseSection;
+        return courseName;
+    }
+
     // EFFECTS: returns course with its fields as a string
     // CREDITS: TellerApp
     //         Link: https://github.students.cs.ubc.ca/CPSC210/TellerApp/
