@@ -25,7 +25,7 @@ public class CourseList implements Saveable {
     // EFFECTS: removes the course at given index, i
     // REQUIRES: index < listOfCourse.size()
     public void removeCourse(int index) {
-        listOfCourses.remove(index - 1);
+        listOfCourses.remove(index);
     }
 
     // EFFECTS: returns the course in the given index, i
