@@ -8,7 +8,13 @@ import model.DataRetriever;
 import org.json.simple.parser.ParseException;
 import persistence.Reader;
 import persistence.Writer;
+import sun.tools.jps.Jps;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,20 +27,49 @@ import java.util.Scanner;
 //      https://github.students.cs.ubc.ca/CPSC210/TellerApp/tree/master/src/main/ca/ubc/cpsc210/bank/model
 
 // Course Analyzer desktop application
-public class CourseAnalyzer {
+public class CourseAnalyzer extends JFrame implements ActionListener {
+    public static final int MAIN_WIDTH = 1000;
+    public static final int MAIN_HEIGHT = 1000;
+
+    public static final int WELCOME_WIDTH = 400;
+    public static final int WELCOME_HEIGHT = 125;
+
     private Scanner input;
     private CourseList courseList;
     private static String apiBaseURL = "https://ubcgrades.com/api/grades/"; // API URL to perform requests;
 
     public CourseAnalyzer() {
+        super("Course Analyzer");
         this.courseList = new CourseList();
-        displayWelcomeMessage();
-        try {
-            reloadData();
-        } catch (IOException e) {
-            System.out.println("Couldn't load the previous course list!");
-        }
+
+        displayWelcomeMenu();
         runCourseAnalyzer();
+    }
+
+
+    // TODO: Documentation
+    private void displayWelcomeMenu() {
+        setPreferredSize(new Dimension(WELCOME_WIDTH, WELCOME_HEIGHT));
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        JLabel welcomeMessage = new JLabel("Welcome to Course Analyzer!");
+        welcomeMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton startNewButton = new JButton("Start!");
+        startNewButton.setActionCommand("newSession");
+        startNewButton.addActionListener(this);
+        startNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton loadDataButton = new JButton("Load Data From Previous Session");
+        loadDataButton.setActionCommand("loadData");
+        loadDataButton.addActionListener(this);
+        loadDataButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        add(welcomeMessage);
+        add(startNewButton);
+        add(loadDataButton);
+        setVisible(true);
+        pack();
     }
 
     // TODO: Documentation
@@ -225,4 +260,17 @@ public class CourseAnalyzer {
         System.out.println("3. Quit");
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("newSession")) {
+            System.out.println("new session");
+        } else if (e.getActionCommand().equals("loadData")) {
+            try {
+                courseList = Reader.readCourses(new File("./data/txt/savedCourses.txt"));
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error! No saved data found!");
+            }
+        }
+
+    }
 }
