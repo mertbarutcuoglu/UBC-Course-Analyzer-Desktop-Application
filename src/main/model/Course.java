@@ -23,6 +23,7 @@ public class Course implements Saveable {
     private String courseNumber;
     private String courseSection;
     private String profName;
+
     private List<Double> courseAveragesForYears;
     private Double courseFiveYearAverage;
 
@@ -57,6 +58,9 @@ public class Course implements Saveable {
         return courseFiveYearAverage;
     }
 
+    public List<Double> getCourseAveragesForYears() {
+        return courseAveragesForYears;
+    }
 
     // EFFECTS: calculates and returns the five year average for the course
     private Double calculateFiveYearAverage() {
@@ -86,7 +90,7 @@ public class Course implements Saveable {
     public String toString() {
         List<String> fiveYearAverageString = new ArrayList<>();
 
-        for (Double average: courseAveragesForYears) {
+        for (Double average : courseAveragesForYears) {
             String averageString = String.format("%.2f", average);
             fiveYearAverageString.add(averageString);
         }
@@ -112,7 +116,7 @@ public class Course implements Saveable {
         printWriter.print(Reader.DELIMETER);
         printWriter.print(profName);
         printWriter.print(Reader.DELIMETER);
-        for (Double average: courseAveragesForYears) {
+        for (Double average : courseAveragesForYears) {
             printWriter.print(average);
             printWriter.print(Reader.DELIMETER);
         }
