@@ -39,6 +39,7 @@ public class CourseList implements Saveable {
         return listOfCourses;
     }
 
+
     @Override
     public void save(PrintWriter printWriter) {
         for (Course course : listOfCourses) {

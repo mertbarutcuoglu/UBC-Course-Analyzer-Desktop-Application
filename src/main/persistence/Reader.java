@@ -43,7 +43,6 @@ public class Reader {
             ArrayList<String> lineComponents = splitString(line);
             courseList.addCourse(parseCourse(lineComponents));
         }
-
         return courseList;
     }
 

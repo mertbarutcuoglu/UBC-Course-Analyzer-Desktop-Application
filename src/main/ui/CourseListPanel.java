@@ -13,9 +13,9 @@ import java.util.List;
 
 public class CourseListPanel extends JPanel  implements ActionListener {
     private DefaultListModel courseNames;
-    private JList courseNamesList;
+    protected JList courseNamesList;
     private JScrollPane courseNamesScrollPane;
-    private JLabel descriptionLabel;
+    protected JLabel descriptionLabel;
     private JButton removeCourseButton;
     private CourseList courseList;
 
@@ -30,7 +30,6 @@ public class CourseListPanel extends JPanel  implements ActionListener {
         courseNamesList.setLayoutOrientation(JList.VERTICAL);
         courseNamesList.setSelectedIndex(0);
         courseNamesList.setVisibleRowCount(5);
-
 
         courseNamesScrollPane = new JScrollPane(courseNamesList);
         courseNamesScrollPane.createVerticalScrollBar();
@@ -48,7 +47,7 @@ public class CourseListPanel extends JPanel  implements ActionListener {
     }
 
     // TODO: Documentation
-    private DefaultListModel setupCourseNamesList(CourseList courseList) {
+    protected DefaultListModel setupCourseNamesList(CourseList courseList) {
         DefaultListModel courseNames = new DefaultListModel();
         List<Course>  courses = courseList.getListOfCourses();
         for (Course c: courses) {
@@ -65,6 +64,11 @@ public class CourseListPanel extends JPanel  implements ActionListener {
                 this.courseNames.remove(selectedIndex);
                 this.courseList.removeCourse(selectedIndex);
             }
+        } else if (e.getActionCommand().equals("seeCourse")) {
+            int selectedIndex = this.courseNamesList.getSelectedIndex();
+            CoursePage coursePage = new CoursePage(this.courseList.getCourse(selectedIndex),this.courseList);
+            coursePage.setVisible(true);
+            SwingUtilities.getWindowAncestor(this).dispose(); // disposes the window that contains the panel
         }
     }
 }

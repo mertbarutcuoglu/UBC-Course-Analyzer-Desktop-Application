@@ -1,0 +1,35 @@
+package ui;
+
+import model.Course;
+import model.CourseList;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
+public class DetailedCourseListPanel extends CourseListPanel {
+
+    private JButton viewCourseButton;
+
+    public DetailedCourseListPanel(CourseList courseList) {
+        super(courseList);
+        super.descriptionLabel.setText("My Courses");
+        super.setSize(800, 200);
+        super.courseNamesList.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
+
+        viewCourseButton = new JButton("View Course Details");
+        viewCourseButton.setActionCommand("seeCourse");
+        viewCourseButton.addActionListener(this);
+        add(viewCourseButton, BorderLayout.EAST);
+    }
+
+    @Override
+    protected DefaultListModel setupCourseNamesList(CourseList courseList) {
+        DefaultListModel courseNames = new DefaultListModel();
+        List<Course> courses = courseList.getListOfCourses();
+        for (Course c: courses) {
+            courseNames.addElement(c.getCourseFullName() + " " + c.getCourseFiveYearAverage());
+        }
+        return courseNames;
+    }
+}

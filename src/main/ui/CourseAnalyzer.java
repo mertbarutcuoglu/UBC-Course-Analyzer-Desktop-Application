@@ -38,7 +38,6 @@ public class CourseAnalyzer extends JFrame implements ActionListener {
         this.courseList = new CourseList();
 
         displayWelcomeMenu();
-        //runCourseAnalyzer();
     }
 
 

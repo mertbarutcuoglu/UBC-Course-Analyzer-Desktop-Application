@@ -72,6 +72,19 @@ public class CourseTest {
 
     }
 
+    @Test
+    public void testGetFullCourseName(){
+        String profName = "ICHIKAWA, JONATHAN";
+
+        List<Double> courseAverages = new ArrayList<>();
+        courseAverages.add(79.65);
+        courseAverages.add(77.87);
+        courseAverages.add(79.96);
+
+        course = new Course("PHIL", "220", "005", profName, courseAverages);
+        assertEquals("PHIL 220 005", course.getCourseFullName());
+    }
+
 }
 
 
