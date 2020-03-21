@@ -16,6 +16,7 @@ public class CourseListPanel extends JPanel  implements ActionListener {
     protected JList courseNamesList;
     private JScrollPane courseNamesScrollPane;
     protected JLabel descriptionLabel;
+    protected JPanel optionButtonsPanel;
     private JButton removeCourseButton;
     private CourseList courseList;
 
@@ -23,7 +24,11 @@ public class CourseListPanel extends JPanel  implements ActionListener {
     public CourseListPanel(CourseList courseList) {
         courseNames = setupCourseNamesList(courseList);
         this.courseList = courseList;
-        setLayout(new BorderLayout()); // Panel will have BorderLayout as LayoutManager for the desired orientation
+        setLayout(new BorderLayout());
+
+        // panel for buttons in the bottom of the content panel
+        optionButtonsPanel = new JPanel();
+        optionButtonsPanel.setLayout(new BorderLayout());
 
         courseNamesList = new JList(courseNames);
         courseNamesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -40,10 +45,12 @@ public class CourseListPanel extends JPanel  implements ActionListener {
         removeCourseButton = new JButton("Remove Selected Course");
         removeCourseButton.setActionCommand("removeCourse");
         removeCourseButton.addActionListener(this);
+        optionButtonsPanel.add(removeCourseButton, BorderLayout.NORTH);
 
         add(courseNamesScrollPane);
         add(descriptionLabel, BorderLayout.NORTH);
-        add(removeCourseButton, BorderLayout.AFTER_LAST_LINE);
+        add(optionButtonsPanel, BorderLayout.SOUTH);
+
     }
 
     // TODO: Documentation
@@ -64,11 +71,17 @@ public class CourseListPanel extends JPanel  implements ActionListener {
                 this.courseNames.remove(selectedIndex);
                 this.courseList.removeCourse(selectedIndex);
             }
-        } else if (e.getActionCommand().equals("seeCourse")) {
+        }
+        if (e.getActionCommand().equals("seeCourse")) {
             int selectedIndex = this.courseNamesList.getSelectedIndex();
             CoursePage coursePage = new CoursePage(this.courseList.getCourse(selectedIndex),this.courseList);
             coursePage.setVisible(true);
             SwingUtilities.getWindowAncestor(this).dispose(); // disposes the window that contains the panel
+        }
+        if (e.getActionCommand().equals("back")) {
+            MainMenu mainMenu = new MainMenu(courseList);
+            mainMenu.setVisible(true);
+            SwingUtilities.getWindowAncestor(this).dispose();
         }
     }
 }

@@ -47,6 +47,7 @@ public class CoursePage extends JFrame implements ActionListener {
         setupFiveYearAverageGraph(course);
         setupAddToCourseListButton();
         setupGoBackToMainMenuButton();
+        addWindowListener(new QuitOptionsPane(this, courseList));
 
         pack();
     }

@@ -37,6 +37,9 @@ public class MainMenu extends JFrame implements ActionListener {
     //TODO: Documentation
     public MainMenu(CourseList courseList) {
         super("Course Analyzer");
+
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
         this.courseList = courseList;
         constraints = new GridBagConstraints();
 
@@ -49,7 +52,7 @@ public class MainMenu extends JFrame implements ActionListener {
         setUpSaveButton();
         setupCourseListPanel();
         setupShowCoursesButton();
-
+        addWindowListener(new QuitOptionsPane(this, courseList));
         pack();
         startButton.requestFocusInWindow();
     }
@@ -148,7 +151,6 @@ public class MainMenu extends JFrame implements ActionListener {
 
         Course course = new Course(courseCode, courseNo, courseSection, profName, fiveYearAverage);
         displayCoursePage(course);
-
     }
 
     // TODO: Documentation
@@ -165,26 +167,29 @@ public class MainMenu extends JFrame implements ActionListener {
         dispose();
     }
 
-    // TODO: handle errors in gui
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("startAnalyzer")) {
             try {
                 analyzeCourse(courseCodeField.getText(), courseNumField.getText(), courseSectionField.getText());
+            } catch (IndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(null, "Error! Course not found!");
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error! Please try again!");
             } catch (ParseException ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Parsing error! Please try again.");
             }
-        } else if (e.getActionCommand().equals("showCourses")) {
+        }
+        if (e.getActionCommand().equals("showCourses")) {
             displayCourseList();
-        } else if (e.getActionCommand().equals("saveCourseList")) {
+        }
+        if (e.getActionCommand().equals("saveCourseList")) {
             try {
                 saveCourseList();
             } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error! File Not Found!");
             } catch (UnsupportedEncodingException ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error! Unsupported encoding!");
             }
         }
     }

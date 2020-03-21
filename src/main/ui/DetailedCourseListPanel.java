@@ -10,12 +10,19 @@ import java.util.List;
 public class DetailedCourseListPanel extends CourseListPanel {
 
     private JButton viewCourseButton;
+    private JButton goBackButton;
 
     public DetailedCourseListPanel(CourseList courseList) {
         super(courseList);
-        super.descriptionLabel.setText("My Courses");
+        super.descriptionLabel.setText("My Courses: (Name Number Section Average)");
+        super.descriptionLabel.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
         super.setSize(800, 200);
         super.courseNamesList.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
+
+        goBackButton = new JButton("Back to Main Menu");
+        goBackButton.setActionCommand("back");
+        goBackButton.addActionListener(this);
+        super.optionButtonsPanel.add(goBackButton, BorderLayout.SOUTH);
 
         viewCourseButton = new JButton("View Course Details");
         viewCourseButton.setActionCommand("seeCourse");
