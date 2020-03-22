@@ -74,11 +74,11 @@ public class CourseListTest {
 
         List<Course> listOfCourses = testCourseList.getListOfCourses();
         int courseListSize = listOfCourses.size();
-        assertEquals(courseListSize, 1);
+        assertEquals(1, courseListSize);
 
-        testCourseList.removeCourse(1);
+        testCourseList.removeCourse(0);
         courseListSize = listOfCourses.size();
-        assertEquals(courseListSize, 0);
+        assertEquals(0, courseListSize);
         assertFalse(listOfCourses.contains(testCourse1));
     }
 
@@ -91,7 +91,7 @@ public class CourseListTest {
         int courseListSize = listOfCourses.size();
         assertEquals(courseListSize, 2);
 
-        testCourseList.removeCourse(2);
+        testCourseList.removeCourse(1);
         courseListSize = listOfCourses.size();
         assertEquals(courseListSize, 1);
         assertFalse(listOfCourses.contains(testCourse2));
