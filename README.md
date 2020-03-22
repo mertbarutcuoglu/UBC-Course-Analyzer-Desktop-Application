@@ -31,6 +31,8 @@
     
 ### User Stories ###
 
+- As a user, I want to be able to see a plot for the class average data of a course in five years.
+
 - As a user, I want to be able to get the five year average for the course that I input, thought by the professor of the 
 section that I input.
 
@@ -47,3 +49,23 @@ future use.
 - As a user, when I start the application, I want the option to load my course list from the my previous usage.
 
 
+### Instructions for Grader ###
+
+- You can generate the loading a saved course list event by clicking the "Load Data From Previous Session" button.
+
+- You can save the given course list by clicking the "Save Course List" button under the saved courses overview panel.
+Also, if you try to quit the application by pressing "x", application will ask you if you want to save the course list.
+
+- You can analyze the course and get the visual component by inputting the course information to the fields and pressing 
+to "Start" button. Some visually rich courses are:
+    - CPSC 121 202
+    - PSYC 102 001 
+    - MATH 200 101
+
+- If you press the "Show Detailed Course List" button, you can see all of the courses in your course list with their 
+data. 
+
+- In the "Detailed Course List" page, you can generate the first two required events:
+    - If you click "Remove Selected Course" button, it will remove the course from the list. 
+    (You have to save the course list if you want to remove that course permanently)
+    - If you click "View Course Details" button, you can see the "Course Page" for the course you chose from the panel.
