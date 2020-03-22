@@ -52,8 +52,7 @@ future use.
 ### Instructions for Grader ###
 
 ## Demo Video For Guidance ##
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ODAVOFRfm9I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+[![Demo Video](http://img.youtube.com/vi/ODAVOFRfm9I/0.jpg)](http://www.youtube.com/watch?v=ODAVOFRfm9I)
 - You can generate the loading a saved course list event by clicking the "Load Data From Previous Session" button.
 
 - You can save the given course list by clicking the "Save Course List" button under the saved courses overview panel.
