@@ -34,7 +34,8 @@ public class MainMenu extends JFrame implements ActionListener {
     private CourseListPanel courseListPanel;
     private GridBagConstraints constraints;
 
-    //TODO: Documentation
+    // MODIFIES: this
+    // EFFECTS: constructs the main menu with its components
     public MainMenu(CourseList courseList) {
         super("Course Analyzer");
 
@@ -57,7 +58,8 @@ public class MainMenu extends JFrame implements ActionListener {
         startButton.requestFocusInWindow();
     }
 
-    // TODO: Documentation
+    // MODIFIES: this
+    // EFFECTS: creates and places the show detailed course list button
     private void setupShowCoursesButton() {
         showCoursesButton = new JButton("Show Detailed Course List");
         showCoursesButton.setActionCommand("showCourses");
@@ -67,7 +69,8 @@ public class MainMenu extends JFrame implements ActionListener {
         add(showCoursesButton, constraints);
     }
 
-    // TODO: Documentation
+    // MODIFIES: this
+    // EFFECTS: creates and places the start button
     private void setupStartButton() {
         startButton = new JButton("Start!");
         startButton.setActionCommand("startAnalyzer");
@@ -77,7 +80,8 @@ public class MainMenu extends JFrame implements ActionListener {
         add(startButton, constraints);
     }
 
-    // TODO: Documentation
+    // MODIFIES: this
+    // EFFECTS: creates and places the course section label
     private void setupCourseSectionLabel() {
         courseSectionField = new JTextField("Course section: ");
         constraints.gridx = 2;
@@ -86,7 +90,8 @@ public class MainMenu extends JFrame implements ActionListener {
         add(courseSectionField, constraints);
     }
 
-    // TODO: Documentation
+    // MODIFIES: this
+    // EFFECTS: creates and places the save course list button
     private void setUpSaveButton() {
         saveButton = new JButton("Save Course List");
         saveButton.addActionListener(this);
@@ -96,6 +101,7 @@ public class MainMenu extends JFrame implements ActionListener {
         add(saveButton, constraints);
     }
 
+    // EFFECTS: saves the recent version of the courseList
     private void saveCourseList() throws FileNotFoundException, UnsupportedEncodingException {
         Writer writer = new Writer(new File("./data/txt/savedCourses.txt"));
         writer.write(courseList);
@@ -103,7 +109,8 @@ public class MainMenu extends JFrame implements ActionListener {
     }
 
 
-    // TODO: Documentation
+    // MODIFIES: this
+    // EFFECTS: creates and places the course number field
     private void setupCourseNumField() {
         courseNumField = new JTextField("Course number: ");
         constraints.gridx = 1;
@@ -112,7 +119,8 @@ public class MainMenu extends JFrame implements ActionListener {
         add(courseNumField, constraints);
     }
 
-    // TODO: Documentation
+    // MODIFIES: this
+    // EFFECTS: creates and places the course code field
     private void setupCourseCodeField() {
         courseCodeField = new JTextField("Course code: ");
         constraints.gridx = 0;
@@ -121,7 +129,8 @@ public class MainMenu extends JFrame implements ActionListener {
         add(courseCodeField, constraints);
     }
 
-    // TODO: Documentation
+    // MODIFIES: this
+    // EFFECTS: creates and places the course list panel
     private void setupCourseListPanel() {
         courseListPanel = new CourseListPanel(courseList);
         constraints.gridx = 4;
@@ -129,7 +138,8 @@ public class MainMenu extends JFrame implements ActionListener {
         add(courseListPanel);
     }
 
-    // TODO: Documentation
+    // EFFECTS: performs the analyze for the given course details,
+    //          and displays the course page for that course
     private void analyzeCourse(String courseCode, String courseNo, String courseSection)
             throws IOException, ParseException {
         CourseDetailsParser parser = new CourseDetailsParser();
@@ -153,14 +163,16 @@ public class MainMenu extends JFrame implements ActionListener {
         displayCoursePage(course);
     }
 
-    // TODO: Documentation
+    // MODIFIES: this, coursePage
+    // EFFECTS: closes the current window and opens the CoursePage window
     private void displayCoursePage(Course course) {
         CoursePage coursePage = new CoursePage(course, courseList);
         coursePage.setVisible(true);
         dispose();
     }
 
-    // TODO
+    // MODIFIES: this, detailedCourseListPage
+    // EFFECTS: closes the current window and opens the DetailedCourseList window
     private void displayCourseList() {
         DetailedCourseList detailedCourseListPage = new DetailedCourseList(courseList);
         detailedCourseListPage.setVisible(true);

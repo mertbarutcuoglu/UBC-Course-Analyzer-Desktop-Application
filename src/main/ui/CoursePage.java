@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// Page that shows the data of a given course
 public class CoursePage extends JFrame implements ActionListener {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -31,6 +32,8 @@ public class CoursePage extends JFrame implements ActionListener {
     private CourseList courseList;
     private Course course;
 
+    // MODIFIES: this
+    // EFFECTS: constructs a course page with given course, and its components
     public CoursePage(Course course, CourseList courseList) {
         super(course.getCourseFullName());
 
@@ -52,7 +55,8 @@ public class CoursePage extends JFrame implements ActionListener {
         pack();
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: creates and places the label that has the given course's name
     private void setupCourseNameLabel(Course course) {
         String courseName = "<html><span style=\"font-family:Dialog;font-size:12px;\">Course Name: </span>";
         courseName = courseName + course.getCourseFullName() + "</html>";
@@ -63,6 +67,8 @@ public class CoursePage extends JFrame implements ActionListener {
         add(courseNameLabel, constraints);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and places the label that has the given course's five year average
     private void setupFiveYearAverageLabel(Course course) {
         String fiveYearAverage =  "<html><span style=\"font-family:Dialog;font-size:12px;\">Five Year Average: </span>";
         fiveYearAverage = fiveYearAverage + course.getCourseFiveYearAverage() + "</html>";
@@ -72,6 +78,8 @@ public class CoursePage extends JFrame implements ActionListener {
         add(fiveYearAverageLabel, constraints);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and places the label that has the given course's professor's name
     private void setupProfNameLabel(Course course) {
         String profName =  "<html><span style=\"font-family:Dialog;font-size:12px;\">Professor: </span>";
         profName = profName + course.getProfName() + "</html>";
@@ -81,12 +89,16 @@ public class CoursePage extends JFrame implements ActionListener {
         add(profNameLabel, constraints);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and places the graphs that plots the five year average
     private void setupFiveYearAverageGraph(Course course) {
         constraints.gridx = 0;
         constraints.gridy = 4;
         add(createPlot(createXYDataset(course)), constraints);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and places the go back to main menu button
     private void setupGoBackToMainMenuButton() {
         goBackToMainMenuButton = new JButton("Back to Main Menu");
         goBackToMainMenuButton.setActionCommand("goBack");
@@ -97,6 +109,8 @@ public class CoursePage extends JFrame implements ActionListener {
         add(goBackToMainMenuButton, constraints);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and places the add to course list button
     private void setupAddToCourseListButton() {
         addToCourseListButton = new JButton("Add to Course List");
         addToCourseListButton.addActionListener(this);
@@ -109,6 +123,7 @@ public class CoursePage extends JFrame implements ActionListener {
 
 
     // CREDITS: https://www.boraji.com/jfreechart-xy-line-chart-example
+    // EFFECTS: creates an XYDataset from the five year average data of the given course
     private XYDataset createXYDataset(Course course) {
         XYSeriesCollection dataset = new XYSeriesCollection();
 
@@ -127,11 +142,12 @@ public class CoursePage extends JFrame implements ActionListener {
     }
 
     // CREDITS: https://www.programcreek.com/java-api-examples/?api=org.jfree.chart.renderer.xy.XYSplineRenderer
+    // EFFECTS: plots the given course yearly average data and returns it
     private ChartPanel createPlot(XYDataset dataset) {
         XYSplineRenderer renderer = new XYSplineRenderer();
 
         NumberAxis yearAxis = new NumberAxis("nth Term Since 2014");
-        yearAxis.setRange(1, 10);
+        yearAxis.getAutoRangeIncludesZero();
 
         NumberAxis averageAxis =  new NumberAxis("Average");
         averageAxis.setRange(50, 100);
@@ -147,22 +163,19 @@ public class CoursePage extends JFrame implements ActionListener {
         return chartPanel;
     }
 
-    // TODO: Documentation
+
+    // MODIFIES: this, mainMenu
+    // EFFECTS: closes the current window and opens the main menu window
     private void goBackToMainMenu() {
         MainMenu mainMenu = new MainMenu(courseList);
         mainMenu.setVisible(true);
         dispose();
     }
 
-    //TODO: Documentation
-    private void addToCourseList() {
-        courseList.addCourse(course);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("addToCourseList")) {
-            addToCourseList();
+            courseList.addCourse(course);
         } else if (e.getActionCommand().equals("goBack")) {
             goBackToMainMenu();
         }

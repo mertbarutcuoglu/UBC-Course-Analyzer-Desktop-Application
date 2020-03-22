@@ -1,6 +1,5 @@
 package ui;
 
-import model.Course;
 import model.CourseList;
 import persistence.Writer;
 

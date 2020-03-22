@@ -4,13 +4,12 @@ import model.Course;
 import model.CourseList;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// Panel that displays saved courses
 public class CourseListPanel extends JPanel  implements ActionListener {
     private DefaultListModel courseNames;
     protected JList courseNamesList;
@@ -20,7 +19,8 @@ public class CourseListPanel extends JPanel  implements ActionListener {
     private JButton removeCourseButton;
     private CourseList courseList;
 
-    // TODO: Documentation
+    // MODIFIES: this
+    // EFFECTS: constructs the panel for the given courseList
     public CourseListPanel(CourseList courseList) {
         courseNames = setupCourseNamesList(courseList);
         this.courseList = courseList;
@@ -53,7 +53,7 @@ public class CourseListPanel extends JPanel  implements ActionListener {
 
     }
 
-    // TODO: Documentation
+    // EFFECTS: creates a DefaultListModel from given CourseList
     protected DefaultListModel setupCourseNamesList(CourseList courseList) {
         DefaultListModel courseNames = new DefaultListModel();
         List<Course>  courses = courseList.getListOfCourses();

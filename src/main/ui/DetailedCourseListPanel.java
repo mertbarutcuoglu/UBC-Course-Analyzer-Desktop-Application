@@ -7,11 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+// Panel for DetailedCourseList
 public class DetailedCourseListPanel extends CourseListPanel {
 
     private JButton viewCourseButton;
     private JButton goBackButton;
 
+    // Constructs DetailedCourseListPanel for given courseList, also adds a view course details button
     public DetailedCourseListPanel(CourseList courseList) {
         super(courseList);
         super.descriptionLabel.setText("My Courses: (Name Number Section Average)");
