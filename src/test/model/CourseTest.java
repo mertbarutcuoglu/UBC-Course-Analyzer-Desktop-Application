@@ -25,6 +25,7 @@ public class CourseTest {
         assertEquals(course.getCourseSection(), "005");
         assertEquals(course.getProfName(), "ICHIKAWA, JONATHAN");
         assertEquals(course.getCourseFiveYearAverage(), courseAverage) ;
+        assertEquals(courseAverages, course.getCourseAveragesForYears());
     }
 
 
