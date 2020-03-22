@@ -98,6 +98,7 @@ public class CourseListTest {
         assertTrue(listOfCourses.contains(testCourse1));
     }
 
+
 }
 
 
