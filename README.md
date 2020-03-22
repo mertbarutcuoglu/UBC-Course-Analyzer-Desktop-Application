@@ -51,7 +51,7 @@ future use.
 
 ### Instructions for Grader ###
 
-## Demo Video For Guidance ##
+#### Demo Video For Guidance ####
 [![Demo Video](http://img.youtube.com/vi/ODAVOFRfm9I/0.jpg)](http://www.youtube.com/watch?v=ODAVOFRfm9I)
 - You can generate the loading a saved course list event by clicking the "Load Data From Previous Session" button.
 
