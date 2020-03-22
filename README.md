@@ -51,13 +51,18 @@ future use.
 
 ### Instructions for Grader ###
 
+## Demo Video For Guidance ##
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ODAVOFRfm9I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 - You can generate the loading a saved course list event by clicking the "Load Data From Previous Session" button.
 
 - You can save the given course list by clicking the "Save Course List" button under the saved courses overview panel.
 Also, if you try to quit the application by pressing "x", application will ask you if you want to save the course list.
 
 - You can analyze the course and get the visual component by inputting the course information to the fields and pressing 
-to "Start" button. Some visually rich courses are:
+to "Start" button. Also, you can generate the "add x to y" function in this page by pressing "Add to Course List" 
+button. If you do so, it will be added to the course list and it will be visible in the panel. However, you have to save
+the course list if you want to access that list when you close the application. Some visually rich courses are:
     - CPSC 121 202
     - PSYC 102 001 
     - MATH 200 101
