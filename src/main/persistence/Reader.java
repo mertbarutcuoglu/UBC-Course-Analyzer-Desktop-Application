@@ -6,9 +6,7 @@ import model.CourseList;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 // A reader to read course data from a file
 // CREDITS: TellerApp
@@ -60,16 +58,51 @@ public class Reader {
         String courseSection = lineComponents.get(2);
         String profName = lineComponents.get(3);
 
-        List<Double> courseAverages = new ArrayList<>();
+        Map<String, Integer> gradeDist = new LinkedHashMap<>();
+        List<String> gradeRanges = createGradeRanges();
+        // All components from 4th one to 14th one are grade distribution values.
+        for (int i = 4; i < 15; i++) {
+            gradeDist.put(gradeRanges.get(i - 4), Integer.parseInt(lineComponents.get(i)));
+        }
 
-        // All components after the 4th component until the last one are grades
-        for (int i = 4; i < lineComponents.size(); i++) {
+        List<Double> courseAverages = new ArrayList<>();
+        // All components after the 15th component until the last one are grades
+        for (int i = 15; i < lineComponents.size(); i++) {
             String average = lineComponents.get(i);
             courseAverages.add(Double.parseDouble(average));
         }
 
-        Course parsedCourse = new Course(courseName, courseNo, courseSection, profName, courseAverages);
+        Course parsedCourse = new Course(courseName, courseNo, courseSection, profName, courseAverages, gradeDist);
 
         return parsedCourse;
+    }
+
+    // EFFECTS: creates the string for grade ranges in a systematic way and returns it as an array
+    private static List<String> createGradeRanges() {
+        List<String> gradeRanges = new ArrayList<>();
+        gradeRanges.add("<50%");
+
+        Integer range = 50;
+        Integer increment = 4;
+
+        for (int i = 0; i < 10; i++) {
+
+            if (i < 2) {
+                gradeRanges.add(range + "-" + (range + increment) + "%");
+                range = range + increment + 1;
+            } else if (i > 1 && i < 7) {
+                increment = 3;
+                gradeRanges.add(range + "-" + (range + increment) + "%");
+                range = range + increment + 1;
+            } else if (i > 6 && i < 9) {
+                increment = 4;
+                gradeRanges.add(range + "-" + (range + increment) + "%");
+                range = range + increment + 1;
+            } else {
+                gradeRanges.add("90-100%");
+            }
+
+        }
+        return gradeRanges;
     }
 }

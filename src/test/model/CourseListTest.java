@@ -4,7 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +20,7 @@ public class CourseListTest {
     public void runBefore() {
         testCourseList = new CourseList();
         String profName = "ICHIKAWA, JONATHAN";
+        Map<String, Integer> gradeDistributions = getGradeDistributionSample();
 
 
         List<Double> courseAverages = new ArrayList<>();
@@ -25,7 +28,8 @@ public class CourseListTest {
         courseAverages.add(77.87);
         courseAverages.add(79.96);
 
-        testCourse1 = new Course("PHIL", "220", "005", profName, courseAverages);
+        testCourse1 = new Course("PHIL", "220", "005", profName, courseAverages,
+                gradeDistributions);
 
         String profName2 = "BELLEVILE, PATRICE";
 
@@ -35,7 +39,8 @@ public class CourseListTest {
         courseAverages.add(71.85);
         courseAverages.add(74.26);
 
-        testCourse2 = new Course("CPSC", "121", "202", profName2, courseAverages2);
+        testCourse2 = new Course("CPSC", "121", "202", profName2, courseAverages2,
+                gradeDistributions);
     }
 
     @Test
@@ -83,7 +88,7 @@ public class CourseListTest {
     }
 
     @Test
-    public void removeCourseFromMultipleItemList(){
+    public void removeCourseFromMultipleItemList() {
         testCourseList.addCourse(testCourse1);
         testCourseList.addCourse(testCourse2);
 
@@ -96,6 +101,23 @@ public class CourseListTest {
         assertEquals(courseListSize, 1);
         assertFalse(listOfCourses.contains(testCourse2));
         assertTrue(listOfCourses.contains(testCourse1));
+    }
+
+
+    private Map<String, Integer> getGradeDistributionSample() {
+        Map<String, Integer> gradeDistributions = new HashMap<>();
+        gradeDistributions.put("<50%", 0);
+        gradeDistributions.put("50-54%", 1);
+        gradeDistributions.put("55-59%", 2);
+        gradeDistributions.put("60-63%", 3);
+        gradeDistributions.put("64-67%", 4);
+        gradeDistributions.put("68-71%", 5);
+        gradeDistributions.put("72-75%", 6);
+        gradeDistributions.put("76-79%", 7);
+        gradeDistributions.put("80-84%", 8);
+        gradeDistributions.put("85-89%", 9);
+        gradeDistributions.put("90-100%", 10);
+        return gradeDistributions;
     }
 
 }

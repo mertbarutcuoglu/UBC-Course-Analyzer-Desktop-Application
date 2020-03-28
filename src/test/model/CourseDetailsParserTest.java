@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -115,6 +113,73 @@ public class CourseDetailsParserTest {
         assertEquals(profName, "BELLEVILLE, PATRICE");
     }
 
+    @Test
+    public void testParseGradeDistributionWithNoErrors() {
+        File jsonFile = new File("./data/json/2018W_PHIL_220.json");
+        String response = "";
+
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(jsonFile);
+        } catch (FileNotFoundException e) {
+            fail("File not found!");
+        }
+
+        while (scanner.hasNext()) {
+            response = response + scanner.nextLine();
+        }
+        scanner.close();
+
+        Map<String, Integer> gradeDistributions = new LinkedHashMap<>();
+        try {
+            parser.parseGradeDistribution(response, "ICHIKAWA, JONATHAN", gradeDistributions);
+        } catch (ParseException e) {
+            fail("Parsing error!");
+        }
+        assertEquals(getGradeDistributionSample(), gradeDistributions);
+    }
+
+    @Test
+    public void testParseGradeDistributionWithInvalidJSONResponse(){
+        File jsonFile = new File("./data/json/invalidJSONResponse.json");
+        String response = "";
+
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(jsonFile);
+        } catch (FileNotFoundException e) {
+            fail("File not found!");
+        }
+
+        while (scanner.hasNext()) {
+            response = response + scanner.nextLine();
+        }
+        scanner.close();
+        Map<String, Integer> gradeDistributions = new LinkedHashMap<>();
+        try {
+            parser.parseGradeDistribution(response, "ICHIKAWA, JONATHAN", gradeDistributions);
+            fail("Didn't catch the exception!");
+        } catch (ParseException e) {
+            System.out.println("Catched the ParseException!");
+        }
+    }
+
+
+    private Map<String, Integer> getGradeDistributionSample() {
+        Map<String, Integer> gradeDistributions = new LinkedHashMap<>();
+        gradeDistributions.put("<50%", 10);
+        gradeDistributions.put("50-54%", 3);
+        gradeDistributions.put("55-59%", 11);
+        gradeDistributions.put("60-63%", 5);
+        gradeDistributions.put("64-67%", 13);
+        gradeDistributions.put("68-71%", 12);
+        gradeDistributions.put("72-75%", 19);
+        gradeDistributions.put("76-79%", 28);
+        gradeDistributions.put("80-84%", 42);
+        gradeDistributions.put("85-89%", 51);
+        gradeDistributions.put("90-100%", 54);
+        return gradeDistributions;
+    }
 
 }
 

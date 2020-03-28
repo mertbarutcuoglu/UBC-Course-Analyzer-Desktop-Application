@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 public class MainMenu extends JFrame implements ActionListener {
@@ -148,7 +148,8 @@ public class MainMenu extends JFrame implements ActionListener {
         HtmlPage profNamePage = retriever.retrieveProfName(courseCode, courseNo, courseSection);
         String profName = parser.parseProfName(profNamePage);
 
-        java.util.List<Double> fiveYearAverage = new ArrayList<>();
+        List<Double> fiveYearAverage = new ArrayList<>();
+        Map<String, Integer> gradeDistributions = new LinkedHashMap<>();
 
         // Requests average for five winter terms from 2014 to 2019, not including 2019
         for (int i = 2014; i < 2019; i++) {
@@ -156,10 +157,10 @@ public class MainMenu extends JFrame implements ActionListener {
             String apiUrl = apiBaseURL + term + "/" + courseCode + "/" + courseNo;
             String apiResponse = retriever.getResponseAsStringFromURL(apiUrl);
             List<Double> termAverages = parser.parseAverage(apiResponse, profName);
+            parser.parseGradeDistribution(apiResponse, profName, gradeDistributions);
             fiveYearAverage.addAll(termAverages);
         }
-
-        Course course = new Course(courseCode, courseNo, courseSection, profName, fiveYearAverage);
+        Course course = new Course(courseCode, courseNo, courseSection, profName, fiveYearAverage, gradeDistributions);
         displayCoursePage(course);
     }
 

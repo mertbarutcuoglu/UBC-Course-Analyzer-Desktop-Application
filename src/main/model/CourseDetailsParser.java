@@ -8,13 +8,15 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // Represents a class with methods for parsing course details
 public class CourseDetailsParser {
     private static String API_BASE_URL = "https://ubcgrades.com/api/grades/"; // API URL to perform requests
 
-    public CourseDetailsParser(){
+    public CourseDetailsParser() {
     }
 
     // REQUIRES: responseArray is not empty && response is a valid JSON data && active internet connection
@@ -38,6 +40,64 @@ public class CourseDetailsParser {
             }
         }
         return termAverages;
+    }
+
+    // REQUIRES: responseArray is not empty && response is a valid JSON data && active internet connection
+    // MODIFIES: this
+    // EFFECTS: parses the given JSON response to get grade distribution for the given professor
+    public void parseGradeDistribution(String response, String profName,
+                                                       Map<String, Integer> overallGradeDistribution)
+            throws ParseException {
+
+        JSONParser jsonParser = new JSONParser();
+        JSONArray responseArray = null;
+        List<String> gradeRanges = createGradeRanges();
+        responseArray = (JSONArray) jsonParser.parse(response);
+
+        for (int i = 0; i < responseArray.size(); i++) {
+            JSONObject responseItem = (JSONObject) responseArray.get(i);
+            if (profName.equals((responseItem.get("instructor")).toString().toUpperCase())) {
+                Map gradeDistribution = (HashMap<String, Integer>) responseItem.get("grades");
+                for (String range : gradeRanges) {
+                    Integer numPeopleForRange = ((Number) gradeDistribution.get(range)).intValue();
+                    Integer currentNumPeopleForRange = overallGradeDistribution.get(range);
+                    if (currentNumPeopleForRange == null) {
+                        currentNumPeopleForRange = new Integer(numPeopleForRange);
+                        overallGradeDistribution.put(range, currentNumPeopleForRange);
+                    } else {
+                        overallGradeDistribution.put(range, currentNumPeopleForRange + numPeopleForRange);
+                    }
+                }
+            }
+        }
+    }
+
+    // EFFECTS: creates the string for grade ranges in a systematic way and returns it as an array
+    private List<String> createGradeRanges() {
+        List<String> gradeRanges = new ArrayList<>();
+        gradeRanges.add("<50%");
+
+        Integer range = 50;
+        Integer increment = 4;
+
+        for (int i = 0; i < 10; i++) {
+
+            if (i < 2) {
+                gradeRanges.add(range + "-" + (range + increment) + "%");
+                range = range + increment + 1;
+            } else if (i > 1 && i < 7) {
+                increment = 3;
+                gradeRanges.add(range + "-" + (range + increment) + "%");
+                range = range + increment + 1;
+            } else if (i > 6 && i < 9) {
+                increment = 4;
+                gradeRanges.add(range + "-" + (range + increment) + "%");
+                range = range + increment + 1;
+            } else {
+                gradeRanges.add("90-100%");
+            }
+        }
+        return gradeRanges;
     }
 
     // EFFECTS: parses the professor name from the given html page and returns it

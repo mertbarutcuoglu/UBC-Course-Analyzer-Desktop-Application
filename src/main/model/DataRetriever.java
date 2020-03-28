@@ -1,7 +1,6 @@
 package model;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 import java.io.IOException;
@@ -49,7 +48,6 @@ public class DataRetriever {
             response = response + scanner.nextLine();
         }
         scanner.close();
-
         return response;
     }
 

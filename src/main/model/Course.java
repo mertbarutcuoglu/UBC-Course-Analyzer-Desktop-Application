@@ -12,30 +12,31 @@ import persistence.Saveable;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 // Represents a course having an ID, number, section, professor name, list of class averages for last five years
-// ,and average of those five years.
+// ,average of those five years, and grade distributions.
 public class Course implements Saveable {
     private String courseID;
     private String courseNumber;
     private String courseSection;
     private String profName;
 
-    private List<Double> courseAveragesForYears;
+    private Map<String, Integer> gradeDistributions;
+    private List<Double> courseAveragesForYears;/**/
     private Double courseFiveYearAverage;
 
 
     //EFFECTS: constructs a course with given parameters, and calculates five year average from the given averages
-    public Course(String courseID, String courseNum, String courseSection, String profName, List<Double> termAverages) {
+    public Course(String courseID, String courseNum, String courseSection, String profName, List<Double> termAverages,
+                  Map<String, Integer> gradeDistributions) {
         this.courseID = courseID.toUpperCase();
         this.courseNumber = courseNum;
         this.courseSection = courseSection;
         this.profName = profName.toUpperCase();
         this.courseAveragesForYears = termAverages;
         this.courseFiveYearAverage = calculateFiveYearAverage();
+        this.gradeDistributions = gradeDistributions;
     }
 
     public String getCourseID() {
@@ -62,6 +63,10 @@ public class Course implements Saveable {
         return courseAveragesForYears;
     }
 
+    public Map<String, Integer> getGradeDistribution() {
+        return gradeDistributions;
+    }
+
     // EFFECTS: calculates and returns the five year average for the course
     private Double calculateFiveYearAverage() {
         double sum = 0.0;
@@ -83,6 +88,35 @@ public class Course implements Saveable {
         return courseName;
     }
 
+    // EFFECTS: creates the string for grade ranges in a systematic way and returns it as an array
+    private List<String> createGradeRanges() {
+        List<String> gradeRanges = new ArrayList<>();
+        gradeRanges.add("<50%");
+
+        Integer range = 50;
+        Integer increment = 4;
+
+        for (int i = 0; i < 10; i++) {
+
+            if (i < 2) {
+                gradeRanges.add(range + "-" + (range + increment) + "%");
+                range = range + increment + 1;
+            } else if (i > 1 && i < 7) {
+                increment = 3;
+                gradeRanges.add(range + "-" + (range + increment) + "%");
+                range = range + increment + 1;
+            } else if (i > 6 && i < 9) {
+                increment = 4;
+                gradeRanges.add(range + "-" + (range + increment) + "%");
+                range = range + increment + 1;
+            } else {
+                gradeRanges.add("90-100%");
+            }
+
+        }
+        return gradeRanges;
+    }
+
     // EFFECTS: returns course with its fields as a string
     // CREDITS: TellerApp
     //         Link: https://github.students.cs.ubc.ca/CPSC210/TellerApp/
@@ -97,11 +131,16 @@ public class Course implements Saveable {
 
         String courseAsString = "[ course id: " + courseID + "; course number: " + courseNumber;
         courseAsString = courseAsString + "; course section: " + courseSection + "; professor: " + profName;
+        List<String> gradeRanges = createGradeRanges();
+        for (String range: gradeRanges) {
+            courseAsString = courseAsString + ";  " + range + ": " + gradeDistributions.get(range);
+        }
         courseAsString = courseAsString + "; 2014 average: " + fiveYearAverageString.get(0);
         courseAsString = courseAsString + "; 2015 average: " + fiveYearAverageString.get(1);
         courseAsString = courseAsString + "; 2016 average: " + fiveYearAverageString.get(2);
         courseAsString = courseAsString + "; 2017 average: " + fiveYearAverageString.get(3);
-        courseAsString = courseAsString + "; 2018 average: " + fiveYearAverageString.get(4) + "]";
+        courseAsString = courseAsString + "; 2018 average: " + fiveYearAverageString.get(4);
+        courseAsString = courseAsString + "]";
 
         return courseAsString;
     }
@@ -116,10 +155,15 @@ public class Course implements Saveable {
         printWriter.print(Reader.DELIMETER);
         printWriter.print(profName);
         printWriter.print(Reader.DELIMETER);
+        for (Integer numPeople : gradeDistributions.values()) {
+            printWriter.print(numPeople);
+            printWriter.print(Reader.DELIMETER);
+        }
         for (Double average : courseAveragesForYears) {
             printWriter.print(average);
             printWriter.print(Reader.DELIMETER);
         }
         printWriter.println();
     }
+
 }
