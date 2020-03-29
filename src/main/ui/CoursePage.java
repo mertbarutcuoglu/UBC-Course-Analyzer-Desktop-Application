@@ -34,10 +34,10 @@ public class CoursePage extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: constructs a course page with given course, and its components
-    public CoursePage(Course course, CourseList courseList) {
+    public CoursePage(Course course) {
         super(course.getCourseFullName());
 
-        this.courseList = courseList;
+        this.courseList = CourseList.getInstance();
         this.course = course;
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -50,7 +50,7 @@ public class CoursePage extends JFrame implements ActionListener {
         setupFiveYearAverageGraph(course);
         setupAddToCourseListButton();
         setupGoBackToMainMenuButton();
-        addWindowListener(new QuitOptionsPane(this, courseList));
+        addWindowListener(new QuitOptionsPane(this));
 
         pack();
     }
@@ -167,7 +167,7 @@ public class CoursePage extends JFrame implements ActionListener {
     // MODIFIES: this, mainMenu
     // EFFECTS: closes the current window and opens the main menu window
     private void goBackToMainMenu() {
-        MainMenu mainMenu = new MainMenu(courseList);
+        MainMenu mainMenu = new MainMenu();
         mainMenu.setVisible(true);
         dispose();
     }

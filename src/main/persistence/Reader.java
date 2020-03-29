@@ -35,7 +35,7 @@ public class Reader {
     // EFFECTS: returns a CourseList from a list of strings,
     //          each string contains information about a Course
     private static CourseList parseContent(List<String> fileContent) {
-        CourseList courseList = new CourseList();
+        CourseList courseList = CourseList.getInstance();
 
         for (String line : fileContent) {
             ArrayList<String> lineComponents = splitString(line);

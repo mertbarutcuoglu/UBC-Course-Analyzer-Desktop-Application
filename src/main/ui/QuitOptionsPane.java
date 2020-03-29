@@ -17,9 +17,9 @@ public class QuitOptionsPane extends WindowAdapter {
     CourseList courseList;
 
     // Constructs a panel in the given component
-    public QuitOptionsPane(Component parentComponent, CourseList courseList) {
+    public QuitOptionsPane(Component parentComponent) {
         this.parentComponent = parentComponent;
-        this.courseList = courseList;
+        this.courseList = CourseList.getInstance();
     }
 
     // EFFECTS: Gets activated when user tries to quit, and asks if they want to save the data.

@@ -21,9 +21,9 @@ public class CourseListPanel extends JPanel  implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: constructs the panel for the given courseList
-    public CourseListPanel(CourseList courseList) {
+    public CourseListPanel() {
+        this.courseList = CourseList.getInstance();
         courseNames = setupCourseNamesList(courseList);
-        this.courseList = courseList;
         setLayout(new BorderLayout());
 
         // panel for buttons in the bottom of the content panel
@@ -74,12 +74,12 @@ public class CourseListPanel extends JPanel  implements ActionListener {
         }
         if (e.getActionCommand().equals("seeCourse")) {
             int selectedIndex = this.courseNamesList.getSelectedIndex();
-            CoursePage coursePage = new CoursePage(this.courseList.getCourse(selectedIndex),this.courseList);
+            CoursePage coursePage = new CoursePage(this.courseList.getCourse(selectedIndex));
             coursePage.setVisible(true);
             SwingUtilities.getWindowAncestor(this).dispose(); // disposes the window that contains the panel
         }
         if (e.getActionCommand().equals("back")) {
-            MainMenu mainMenu = new MainMenu(courseList);
+            MainMenu mainMenu = new MainMenu();
             mainMenu.setVisible(true);
             SwingUtilities.getWindowAncestor(this).dispose();
         }

@@ -18,7 +18,7 @@ public class CourseListTest {
 
     @BeforeEach
     public void runBefore() {
-        testCourseList = new CourseList();
+        testCourseList = CourseList.getInstance();
         String profName = "ICHIKAWA, JONATHAN";
         Map<String, Integer> gradeDistributions = getGradeDistributionSample();
 

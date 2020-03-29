@@ -19,7 +19,7 @@ public class CourseAnalyzer extends JFrame implements ActionListener {
 
     public CourseAnalyzer() {
         super("Course Analyzer");
-        this.courseList = new CourseList();
+        this.courseList = CourseList.getInstance();
 
         displayWelcomeMenu();
     }
@@ -54,7 +54,7 @@ public class CourseAnalyzer extends JFrame implements ActionListener {
     // MODIFIES: this, mainMenu
     // EFFECTS: closes the current window and opens the main menu window
     private void displayMainMenu() {
-        MainMenu mainMenu = new MainMenu(courseList);
+        MainMenu mainMenu = new MainMenu();
         mainMenu.setVisible(true);
         dispose();
     }

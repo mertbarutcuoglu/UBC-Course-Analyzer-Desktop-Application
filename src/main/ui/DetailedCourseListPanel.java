@@ -14,8 +14,8 @@ public class DetailedCourseListPanel extends CourseListPanel {
     private JButton goBackButton;
 
     // Constructs DetailedCourseListPanel for given courseList, also adds a view course details button
-    public DetailedCourseListPanel(CourseList courseList) {
-        super(courseList);
+    public DetailedCourseListPanel() {
+        super();
         super.descriptionLabel.setText("My Courses: (Name Number Section Average)");
         super.descriptionLabel.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
         super.setSize(800, 200);

@@ -50,7 +50,7 @@ public class WriterTest {
         course2 = new Course("PHIL", "220", "003", "AYDEDE, MURAT",
                 course2Averages, gradeDistributions);
 
-        testList = new CourseList();
+        testList = CourseList.getInstance();
         testList.addCourse(course1);
         testList.addCourse(course2);
     }

@@ -9,10 +9,19 @@ import java.util.List;
 // Represents a course list having a list of courses.
 public class CourseList implements Saveable {
     private List<Course> listOfCourses;
+    private static CourseList instance;
 
     //EFFECTS: construct an empty course list
-    public CourseList() {
+    private CourseList() {
         listOfCourses = new ArrayList<>();
+    }
+
+    // EFFECTS: returns the courseList as an instance, if not instantiated, creates a new one
+    public static CourseList getInstance() {
+        if (instance == null) {
+            instance = new CourseList();
+        }
+        return instance;
     }
 
     // MODIFIES: this
@@ -38,7 +47,6 @@ public class CourseList implements Saveable {
     public List<Course> getListOfCourses() {
         return listOfCourses;
     }
-
 
     @Override
     public void save(PrintWriter printWriter) {

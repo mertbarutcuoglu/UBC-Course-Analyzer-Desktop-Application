@@ -14,12 +14,12 @@ public class DetailedCourseList extends JFrame {
     private DetailedCourseListPanel detailedCourseListPanel;
 
     // Constructs DetailedCourseList for given courseList
-    public DetailedCourseList(CourseList courseList) {
-        this.courseList = courseList;
-        detailedCourseListPanel = new DetailedCourseListPanel(courseList);
+    public DetailedCourseList() {
+        this.courseList = CourseList.getInstance();
+        detailedCourseListPanel = new DetailedCourseListPanel();
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        addWindowListener(new QuitOptionsPane(this, courseList));
+        addWindowListener(new QuitOptionsPane(this));
         add(detailedCourseListPanel);
         pack();
 

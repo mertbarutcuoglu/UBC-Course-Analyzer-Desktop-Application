@@ -36,12 +36,12 @@ public class MainMenu extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: constructs the main menu with its components
-    public MainMenu(CourseList courseList) {
+    public MainMenu() {
         super("Course Analyzer");
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-        this.courseList = courseList;
+        this.courseList = CourseList.getInstance();
         constraints = new GridBagConstraints();
 
         setPreferredSize(new Dimension(MAIN_WIDTH, MAIN_HEIGHT));
@@ -53,7 +53,7 @@ public class MainMenu extends JFrame implements ActionListener {
         setUpSaveButton();
         setupCourseListPanel();
         setupShowCoursesButton();
-        addWindowListener(new QuitOptionsPane(this, courseList));
+        addWindowListener(new QuitOptionsPane(this));
         pack();
         startButton.requestFocusInWindow();
     }
@@ -132,7 +132,7 @@ public class MainMenu extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: creates and places the course list panel
     private void setupCourseListPanel() {
-        courseListPanel = new CourseListPanel(courseList);
+        courseListPanel = new CourseListPanel();
         constraints.gridx = 4;
         constraints.gridy = 0;
         add(courseListPanel);
@@ -167,7 +167,7 @@ public class MainMenu extends JFrame implements ActionListener {
     // MODIFIES: this, coursePage
     // EFFECTS: closes the current window and opens the CoursePage window
     private void displayCoursePage(Course course) {
-        CoursePage coursePage = new CoursePage(course, courseList);
+        CoursePage coursePage = new CoursePage(course);
         coursePage.setVisible(true);
         dispose();
     }
@@ -175,7 +175,7 @@ public class MainMenu extends JFrame implements ActionListener {
     // MODIFIES: this, detailedCourseListPage
     // EFFECTS: closes the current window and opens the DetailedCourseList window
     private void displayCourseList() {
-        DetailedCourseList detailedCourseListPage = new DetailedCourseList(courseList);
+        DetailedCourseList detailedCourseListPage = new DetailedCourseList();
         detailedCourseListPage.setVisible(true);
         dispose();
     }
