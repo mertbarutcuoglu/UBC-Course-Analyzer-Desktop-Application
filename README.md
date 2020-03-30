@@ -33,6 +33,8 @@
 
 - As a user, I want to be able to see a plot for the class average data of a course in five years.
 
+- As a user, I want to be able to see a bar chart for the grade distribution data of a course in five years.
+
 - As a user, I want to be able to get the five year average for the course that I input, thought by the professor of the 
 section that I input.
 
@@ -48,10 +50,22 @@ future use.
 
 - As a user, when I start the application, I want the option to load my course list from the my previous usage.
 
+### Phase 4: Task 2 ###
+
+The option that I chose: Make appropriate use of the Map interface somewhere in your code. 
+
+I used the Map interface in my Course class. Now, there is a new field in Course that is named grade distributions. 
+This field of Course holds the grade distribution between students for certain grade ranges. 
+For example, 90-100%: 120 etc.
+This means that there is 120 student who took this course in the past five years from that professor get a grade between 
+90-100%. I used a LinkedHashMap because the order of the grade ranges are crucial for this field. The reason is, by 
+using this field, now in the Course page in the GUI, you can find a bar chart that visualizes the distribution of the 
+grades. 
+
 
 ### Instructions for Grader ###
 
-#### Demo Video For Guidance ####
+#### Demo Video For Guidance (For Phase 3) ####
 [![Demo Video](http://img.youtube.com/vi/ODAVOFRfm9I/0.jpg)](http://www.youtube.com/watch?v=ODAVOFRfm9I)
 - You can generate the loading a saved course list event by clicking the "Load Data From Previous Session" button.
 
