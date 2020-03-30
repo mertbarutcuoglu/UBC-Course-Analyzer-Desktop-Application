@@ -23,7 +23,7 @@ public class Course implements Saveable {
     private String profName;
 
     private Map<String, Integer> gradeDistributions;
-    private List<Double> courseAveragesForYears;/**/
+    private List<Double> courseAveragesForYears;
     private Double courseFiveYearAverage;
 
 

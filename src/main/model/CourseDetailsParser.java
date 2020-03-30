@@ -25,9 +25,7 @@ public class CourseDetailsParser {
     public List<Double> parseAverage(String response, String profName) throws ParseException {
 
         JSONParser jsonParser = new JSONParser();
-        JSONArray responseArray = null;
-
-        responseArray = (JSONArray) jsonParser.parse(response);
+        JSONArray responseArray = (JSONArray) jsonParser.parse(response);
 
         List<Double> termAverages = new ArrayList<>();
 
@@ -50,9 +48,8 @@ public class CourseDetailsParser {
             throws ParseException {
 
         JSONParser jsonParser = new JSONParser();
-        JSONArray responseArray = null;
         List<String> gradeRanges = createGradeRanges();
-        responseArray = (JSONArray) jsonParser.parse(response);
+        JSONArray responseArray = (JSONArray) jsonParser.parse(response);
 
         for (int i = 0; i < responseArray.size(); i++) {
             JSONObject responseItem = (JSONObject) responseArray.get(i);

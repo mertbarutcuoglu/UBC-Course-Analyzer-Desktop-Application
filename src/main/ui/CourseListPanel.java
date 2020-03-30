@@ -50,7 +50,6 @@ public class CourseListPanel extends JPanel  implements ActionListener {
         add(courseNamesScrollPane);
         add(descriptionLabel, BorderLayout.NORTH);
         add(optionButtonsPanel, BorderLayout.SOUTH);
-
     }
 
     // EFFECTS: creates a DefaultListModel from given CourseList
