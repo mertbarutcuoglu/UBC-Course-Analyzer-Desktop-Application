@@ -63,7 +63,7 @@ using this field, now in the Course page in the GUI, you can find a bar chart th
 grades. 
 
 ### Phase 4: Task 3 ###
-Identified Problems:
+Identified Problems & Improvements :
 -  CourseList class is used by all of the GUI classes other than the Main class which only has the welcome page. All of
 the classes are using the same CourseList, so they used to have a CourseList parameter in their constructor and pass it 
 and instantiated it any time that we changed the page. However, there should be only a single instance of that class 
@@ -72,6 +72,13 @@ single instance will make everything easier because that class will be used by m
 I applied Singleton Design Pattern to my CourseList class. Making this change also improves cohesion because now the
 other GUI classes doesn't have to ensure that the CourseList is the same and its content doesn't change during the page
 transitions.
+
+- CoursePage class is the GUI class that shows the details of a course like its name, average, and its data 
+visualizations. I noticed that this class also creates the data visualization panels and also handles and performs the 
+related tasks. This violates the Single Responsibility Principle, therefore it causes poor cohesion. To solve this issue 
+by improving cohesion, I created two new classes, FiveYearAverageGraph and GradeDistributionChart. These classes handle
+and perform the creation of the data visualization and the related tasks to this. Therefore, it improves cohesion by 
+following the Single Responsibility Principle.
      
 ### Instructions for Grader ###
 
