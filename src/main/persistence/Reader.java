@@ -15,7 +15,7 @@ public class Reader {
     public static final String DELIMETER = ";";
 
     // EFFECTS: constructs the reader
-    public Reader(){
+    public Reader() {
 
     }
 
@@ -84,25 +84,24 @@ public class Reader {
 
         Integer range = 50;
         Integer increment = 4;
-
-        for (int i = 0; i < 10; i++) {
-
+        for (int i = 0; i < 9; i++) {
             if (i < 2) {
                 gradeRanges.add(range + "-" + (range + increment) + "%");
                 range = range + increment + 1;
-            } else if (i > 1 && i < 7) {
+            }
+            if (i > 1 && i < 7) {
                 increment = 3;
                 gradeRanges.add(range + "-" + (range + increment) + "%");
                 range = range + increment + 1;
-            } else if (i > 6 && i < 9) {
+            }
+            if (i > 6 && i < 9) {
                 increment = 4;
                 gradeRanges.add(range + "-" + (range + increment) + "%");
                 range = range + increment + 1;
-            } else {
-                gradeRanges.add("90-100%");
             }
-
         }
+
+        gradeRanges.add("90-100%");
         return gradeRanges;
     }
 }

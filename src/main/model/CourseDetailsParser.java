@@ -73,30 +73,30 @@ public class CourseDetailsParser {
     }
 
     // EFFECTS: creates the string for grade ranges in a systematic way and returns it as an array
-    private List<String> createGradeRanges() {
+    private static List<String> createGradeRanges() {
         List<String> gradeRanges = new ArrayList<>();
         gradeRanges.add("<50%");
 
         Integer range = 50;
         Integer increment = 4;
-
-        for (int i = 0; i < 10; i++) {
-
+        for (int i = 0; i < 9; i++) {
             if (i < 2) {
                 gradeRanges.add(range + "-" + (range + increment) + "%");
                 range = range + increment + 1;
-            } else if (i > 1 && i < 7) {
+            }
+            if (i > 1 && i < 7) {
                 increment = 3;
                 gradeRanges.add(range + "-" + (range + increment) + "%");
                 range = range + increment + 1;
-            } else if (i > 6 && i < 9) {
+            }
+            if (i > 6 && i < 9) {
                 increment = 4;
                 gradeRanges.add(range + "-" + (range + increment) + "%");
                 range = range + increment + 1;
-            } else {
-                gradeRanges.add("90-100%");
             }
         }
+
+        gradeRanges.add("90-100%");
         return gradeRanges;
     }
 
