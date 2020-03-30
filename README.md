@@ -62,7 +62,17 @@ This means that there is 120 student who took this course in the past five years
 using this field, now in the Course page in the GUI, you can find a bar chart that visualizes the distribution of the 
 grades. 
 
-
+### Phase 4: Task 3 ###
+Identified Problems:
+-  CourseList class is used by all of the GUI classes other than the Main class which only has the welcome page. All of
+the classes are using the same CourseList, so they used to have a CourseList parameter in their constructor and pass it 
+and instantiated it any time that we changed the page. However, there should be only a single instance of that class 
+because the CourseList is same throughout the execution of the program. Also, having a global point of access for that 
+single instance will make everything easier because that class will be used by many classes. So, to solve this problem,
+I applied Singleton Design Pattern to my CourseList class. Making this change also improves cohesion because now the
+other GUI classes doesn't have to ensure that the CourseList is the same and its content doesn't change during the page
+transitions.
+     
 ### Instructions for Grader ###
 
 #### Demo Video For Guidance (For Phase 3) ####
