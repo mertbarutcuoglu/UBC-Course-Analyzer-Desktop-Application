@@ -2,12 +2,16 @@ package ui;
 
 import model.Course;
 import model.CourseList;
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -16,7 +20,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 // Page that shows the data of a given course
 public class CoursePage extends JFrame implements ActionListener {
@@ -28,9 +34,14 @@ public class CoursePage extends JFrame implements ActionListener {
     private JLabel fiveYearAverageLabel;
     private JButton addToCourseListButton;
     private JButton goBackToMainMenuButton;
+    private JButton switchGraphButton;
     private GridBagConstraints constraints;
     private CourseList courseList;
     private Course course;
+
+    private ChartPanel gradeDistributionChart;
+    private ChartPanel historicalAverageChart;
+    private boolean isGradeDistributionChartVisible;
 
     // MODIFIES: this
     // EFFECTS: constructs a course page with given course, and its components
@@ -48,8 +59,12 @@ public class CoursePage extends JFrame implements ActionListener {
         setupProfNameLabel(course);
         setupFiveYearAverageLabel(course);
         setupFiveYearAverageGraph(course);
+        setupGradeDistributionChart(course);
+        this.isGradeDistributionChartVisible = true;
+
         setupAddToCourseListButton();
         setupGoBackToMainMenuButton();
+        setupSwitchGraphButton();
         addWindowListener(new QuitOptionsPane(this));
 
         pack();
@@ -94,8 +109,19 @@ public class CoursePage extends JFrame implements ActionListener {
     private void setupFiveYearAverageGraph(Course course) {
         constraints.gridx = 0;
         constraints.gridy = 4;
-        add(createPlot(createXYDataset(course)), constraints);
+        createAveragePlot(createXYDatasetForAverages(course));
+        add(historicalAverageChart, constraints);
     }
+
+    // MODIFIES: this
+    // EFFECTS: creates and places the graphs that plots the five year average
+    private void setupGradeDistributionChart(Course course) {
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        createGradeDistributionBarChart(createGradeDistributionDataset(course));
+        add(gradeDistributionChart, constraints);
+    }
+
 
     // MODIFIES: this
     // EFFECTS: creates and places the go back to main menu button
@@ -107,6 +133,17 @@ public class CoursePage extends JFrame implements ActionListener {
         constraints.gridy = 0;
         constraints.anchor = GridBagConstraints.WEST;
         add(goBackToMainMenuButton, constraints);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates and places the go back to main menu button
+    private void setupSwitchGraphButton() {
+        switchGraphButton = new JButton("Switch to Course Average Graph");
+        switchGraphButton.setActionCommand("switchGraph");
+        switchGraphButton.addActionListener(this);
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        add(switchGraphButton, constraints);
     }
 
     // MODIFIES: this
@@ -124,7 +161,7 @@ public class CoursePage extends JFrame implements ActionListener {
 
     // CREDITS: https://www.boraji.com/jfreechart-xy-line-chart-example
     // EFFECTS: creates an XYDataset from the five year average data of the given course
-    private XYDataset createXYDataset(Course course) {
+    private XYDataset createXYDatasetForAverages(Course course) {
         XYSeriesCollection dataset = new XYSeriesCollection();
 
         List<Double> termAverages = course.getCourseAveragesForYears();
@@ -143,7 +180,7 @@ public class CoursePage extends JFrame implements ActionListener {
 
     // CREDITS: https://www.programcreek.com/java-api-examples/?api=org.jfree.chart.renderer.xy.XYSplineRenderer
     // EFFECTS: plots the given course yearly average data and returns it
-    private ChartPanel createPlot(XYDataset dataset) {
+    private void createAveragePlot(XYDataset dataset) {
         XYSplineRenderer renderer = new XYSplineRenderer();
 
         NumberAxis yearAxis = new NumberAxis("nth Term Since 2014");
@@ -160,9 +197,39 @@ public class CoursePage extends JFrame implements ActionListener {
         ChartPanel chartPanel = new ChartPanel(chart, false);
         chartPanel.setRangeZoomable(false);
         chartPanel.setSize(new Dimension(175, 150));
-        return chartPanel;
+        chartPanel.setVisible(false);
+        this.historicalAverageChart = chartPanel;
     }
 
+    // EFFECTS: takes the grade distributions of a course and creates a category dataset from it and returns it
+    private CategoryDataset createGradeDistributionDataset(Course course) {
+        Map<String, Integer> gradeDistributions = course.getGradeDistribution();
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        List<Integer> grades = new ArrayList<>(gradeDistributions.values());
+        List<String> ranges = new ArrayList<>(gradeDistributions.keySet());
+        for (int i = 0; i < grades.size(); i++) {
+            dataset.addValue(grades.get(i), course.getCourseFullName(), ranges.get(i));
+        }
+        return dataset;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a bar chart from given dataset for grade distributions
+    // Credits: http://zetcode.com/java/jfreechart/
+    private void createGradeDistributionBarChart(CategoryDataset dataset) {
+        JFreeChart barChart = ChartFactory.createBarChart(
+                "Grade Distributions",
+                "Grade Ranges",
+                "Number of Students",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true, true, false);
+        ChartPanel chartPanel = new ChartPanel(barChart);
+        chartPanel.setBackground(Color.white);
+        chartPanel.setMouseZoomable(false);
+        chartPanel.setSize(new Dimension(175, 150));
+        this.gradeDistributionChart = chartPanel;
+    }
 
     // MODIFIES: this, mainMenu
     // EFFECTS: closes the current window and opens the main menu window
@@ -176,8 +243,22 @@ public class CoursePage extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("addToCourseList")) {
             courseList.addCourse(course);
-        } else if (e.getActionCommand().equals("goBack")) {
+        }
+        if (e.getActionCommand().equals("goBack")) {
             goBackToMainMenu();
+        }
+        if (e.getActionCommand().equals("switchGraph")) {
+            if (isGradeDistributionChartVisible) {
+                gradeDistributionChart.setVisible(false);
+                historicalAverageChart.setVisible(true);
+                switchGraphButton.setText("Switch to Grade Distribution Chart");
+                this.isGradeDistributionChartVisible = false;
+            } else {
+                gradeDistributionChart.setVisible(true);
+                historicalAverageChart.setVisible(false);
+                switchGraphButton.setText("Switch to Historical Average Graph");
+                this.isGradeDistributionChartVisible = true;
+            }
         }
     }
 }

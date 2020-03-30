@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class ReaderTest {
-
+    CourseList courses;
     @Test
     void testReader(){
         Reader testReader = new Reader();
@@ -22,7 +22,9 @@ public class ReaderTest {
     @Test
     void testReadACoursesSuccess() {
         try {
-            CourseList courses = Reader.readCourses(new File("./data/txt/testCourseListToRead.txt"));
+            courses = CourseList.getInstance();
+            clearCourseList();
+            courses = Reader.readCourses(new File("./data/txt/testCourseListToRead.txt"));
 
             Course testCourse1 = courses.getCourse(0);
             assertEquals("TEST", testCourse1.getCourseID());
@@ -60,4 +62,9 @@ public class ReaderTest {
         gradeDistributions.put("90-100%", 10);
         return gradeDistributions;
     }
+    // since the CourseList is the same across all classes, removes everything for other class tests
+    private void clearCourseList() {
+        courses.getListOfCourses().removeAll(courses.getListOfCourses());
+    }
+
 }

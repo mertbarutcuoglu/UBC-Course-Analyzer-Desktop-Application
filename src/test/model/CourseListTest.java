@@ -1,7 +1,6 @@
 package model;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,16 +11,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // Tests for CourseList class
 public class CourseListTest {
-    CourseList testCourseList;
     Course testCourse1;
     Course testCourse2;
+    CourseList testCourseList;
 
     @BeforeEach
     public void runBefore() {
-        testCourseList = CourseList.getInstance();
         String profName = "ICHIKAWA, JONATHAN";
         Map<String, Integer> gradeDistributions = getGradeDistributionSample();
 
+        testCourseList = CourseList.getInstance();
+        clearCourseList();
 
         List<Double> courseAverages = new ArrayList<>();
         courseAverages.add(79.65);
@@ -44,40 +44,25 @@ public class CourseListTest {
     }
 
     @Test
-    public void testCourseList() {
+    public void testGetInstance() {
         int courseListSize = testCourseList.getListOfCourses().size();
-        assertEquals(courseListSize, 0);
+        assertEquals(0, courseListSize);
     }
 
     @Test
     public void addCourseOne() {
         testCourseList.addCourse(testCourse1);
-
         List<Course> listOfCourses = testCourseList.getListOfCourses();
         int courseListSize = listOfCourses.size();
-
-        assertEquals(courseListSize, 1);
+        assertEquals(1, courseListSize);
         assertTrue(listOfCourses.contains(testCourse1));
-    }
-
-    @Test
-    public void addCourseMany() {
-        testCourseList.addCourse(testCourse1);
-        testCourseList.addCourse(testCourse2);
-
-        List<Course> listOfCourses = testCourseList.getListOfCourses();
-        int courseListSize = listOfCourses.size();
-
-        assertEquals(courseListSize, 2);
-        assertTrue(listOfCourses.contains(testCourse1));
-        assertTrue(listOfCourses.contains(testCourse2));
     }
 
     @Test
     public void removeCourseFromSingleItemList() {
         testCourseList.addCourse(testCourse1);
-
         List<Course> listOfCourses = testCourseList.getListOfCourses();
+
         int courseListSize = listOfCourses.size();
         assertEquals(1, courseListSize);
 
@@ -88,22 +73,40 @@ public class CourseListTest {
     }
 
     @Test
-    public void removeCourseFromMultipleItemList() {
+    public void addCourseMany() {
         testCourseList.addCourse(testCourse1);
         testCourseList.addCourse(testCourse2);
 
         List<Course> listOfCourses = testCourseList.getListOfCourses();
         int courseListSize = listOfCourses.size();
-        assertEquals(courseListSize, 2);
+
+        assertEquals(2, courseListSize);
+        assertTrue(listOfCourses.contains(testCourse1));
+        assertTrue(listOfCourses.contains(testCourse2));
+    }
+
+
+
+    @Test
+    public void removeCourseFromMultipleItemList() {
+        testCourseList.addCourse(testCourse1);
+        testCourseList.addCourse(testCourse2);
+        List<Course> listOfCourses = testCourseList.getListOfCourses();
+        int courseListSize = listOfCourses.size();
+        assertEquals(2, courseListSize);
 
         testCourseList.removeCourse(1);
         courseListSize = listOfCourses.size();
         assertEquals(courseListSize, 1);
         assertFalse(listOfCourses.contains(testCourse2));
-        assertTrue(listOfCourses.contains(testCourse1));
     }
 
+    // since the CourseList is the same across all classes, removes everything for other class tests
+    public void clearCourseList() {
+        testCourseList.getListOfCourses().removeAll(testCourseList.getListOfCourses());
+    }
 
+    // EFFECTS: creates a sample grade distribution data for test purposes
     private Map<String, Integer> getGradeDistributionSample() {
         Map<String, Integer> gradeDistributions = new HashMap<>();
         gradeDistributions.put("<50%", 0);
