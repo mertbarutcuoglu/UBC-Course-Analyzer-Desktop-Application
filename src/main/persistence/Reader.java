@@ -94,7 +94,7 @@ public class Reader {
                 gradeRanges.add(range + "-" + (range + increment) + "%");
                 range = range + increment + 1;
             }
-            if (i > 6 && i < 9) {
+            if (i > 6) {
                 increment = 4;
                 gradeRanges.add(range + "-" + (range + increment) + "%");
                 range = range + increment + 1;
