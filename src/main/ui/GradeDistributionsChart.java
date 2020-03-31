@@ -4,6 +4,10 @@ import model.Course;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPosition;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -33,6 +37,8 @@ public class GradeDistributionsChart extends JPanel {
                 dataset,
                 PlotOrientation.VERTICAL,
                 true, true, false);
+        CategoryAxis domainAxis = barChart.getCategoryPlot().getDomainAxis();
+        domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
         ChartPanel chartPanel = new ChartPanel(barChart);
         chartPanel.setBackground(Color.white);
         chartPanel.setMouseZoomable(false);

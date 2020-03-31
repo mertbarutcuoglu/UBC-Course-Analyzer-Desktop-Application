@@ -19,11 +19,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.List;
 
-public class MainMenu extends JFrame implements ActionListener {
+public class HomePage extends JFrame implements ActionListener {
     public static final int MAIN_WIDTH = 750;
     public static final int MAIN_HEIGHT = 250;
     private static String apiBaseURL = "https://ubcgrades.com/api/grades/"; // API URL to perform requests;
 
+    private QuitOptionsPane quitOptionsPane;
     private JTextField courseCodeField;
     private JTextField courseNumField;
     private JTextField courseSectionField;
@@ -36,7 +37,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: constructs the main menu with its components
-    public MainMenu() {
+    public HomePage() {
         super("Course Analyzer");
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -53,7 +54,8 @@ public class MainMenu extends JFrame implements ActionListener {
         setUpSaveButton();
         setupCourseListPanel();
         setupShowCoursesButton();
-        addWindowListener(new QuitOptionsPane(this));
+        this.quitOptionsPane = new QuitOptionsPane(this);
+        addWindowListener(quitOptionsPane);
         pack();
         startButton.requestFocusInWindow();
     }

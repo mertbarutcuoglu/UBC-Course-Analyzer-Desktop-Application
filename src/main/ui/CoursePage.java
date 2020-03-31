@@ -22,6 +22,7 @@ public class CoursePage extends JFrame implements ActionListener {
     private GridBagConstraints constraints;
     private CourseList courseList;
     private Course course;
+    private QuitOptionsPane quitPane;
 
     private JPanel gradeDistributionChart;
     private JPanel historicalAverageGraph;
@@ -49,7 +50,8 @@ public class CoursePage extends JFrame implements ActionListener {
         setupAddToCourseListButton();
         setupGoBackToMainMenuButton();
         setupSwitchGraphButton();
-        addWindowListener(new QuitOptionsPane(this));
+        this.quitPane = new QuitOptionsPane(this);
+        addWindowListener(quitPane);
 
         pack();
     }
@@ -145,7 +147,7 @@ public class CoursePage extends JFrame implements ActionListener {
     // MODIFIES: this, mainMenu
     // EFFECTS: closes the current window and opens the main menu window
     private void goBackToMainMenu() {
-        MainMenu mainMenu = new MainMenu();
+        HomePage mainMenu = new HomePage();
         mainMenu.setVisible(true);
         dispose();
     }

@@ -10,16 +10,16 @@ public class DetailedCourseList extends JFrame {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
-    private CourseList courseList;
     private DetailedCourseListPanel detailedCourseListPanel;
+    private QuitOptionsPane quitOptionsPane;
 
     // Constructs DetailedCourseList for given courseList
     public DetailedCourseList() {
-        this.courseList = CourseList.getInstance();
         detailedCourseListPanel = new DetailedCourseListPanel();
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        addWindowListener(new QuitOptionsPane(this));
+        this.quitOptionsPane = new QuitOptionsPane(this);
+        addWindowListener(quitOptionsPane);
         add(detailedCourseListPanel);
         pack();
 

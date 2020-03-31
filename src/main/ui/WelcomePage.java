@@ -10,17 +10,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-// Course Analyzer Welcome Menu
-public class CourseAnalyzer extends JFrame implements ActionListener {
+// Course Analyzer Welcome Page
+public class WelcomePage extends JFrame implements ActionListener {
     public static final int WELCOME_WIDTH = 400;
     public static final int WELCOME_HEIGHT = 125;
 
-    private CourseList courseList;
-
-    public CourseAnalyzer() {
+    public WelcomePage() {
         super("Course Analyzer");
-        this.courseList = CourseList.getInstance();
-
         displayWelcomeMenu();
     }
 
@@ -54,7 +50,7 @@ public class CourseAnalyzer extends JFrame implements ActionListener {
     // MODIFIES: this, mainMenu
     // EFFECTS: closes the current window and opens the main menu window
     private void displayMainMenu() {
-        MainMenu mainMenu = new MainMenu();
+        HomePage mainMenu = new HomePage();
         mainMenu.setVisible(true);
         dispose();
     }
@@ -65,7 +61,7 @@ public class CourseAnalyzer extends JFrame implements ActionListener {
             displayMainMenu();
         } else if (e.getActionCommand().equals("loadData")) {
             try {
-                courseList = Reader.readCourses(new File("./data/txt/savedCourses.txt"));
+                Reader.readCourses(new File("./data/txt/savedCourses.txt"));
                 displayMainMenu();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Error! No saved data found!");

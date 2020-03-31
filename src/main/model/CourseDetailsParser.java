@@ -14,7 +14,6 @@ import java.util.Map;
 
 // Represents a class with methods for parsing course details
 public class CourseDetailsParser {
-    private static String API_BASE_URL = "https://ubcgrades.com/api/grades/"; // API URL to perform requests
 
     public CourseDetailsParser() {
     }

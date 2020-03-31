@@ -78,7 +78,7 @@ public class CourseListPanel extends JPanel  implements ActionListener {
             SwingUtilities.getWindowAncestor(this).dispose(); // disposes the window that contains the panel
         }
         if (e.getActionCommand().equals("back")) {
-            MainMenu mainMenu = new MainMenu();
+            HomePage mainMenu = new HomePage();
             mainMenu.setVisible(true);
             SwingUtilities.getWindowAncestor(this).dispose();
         }
