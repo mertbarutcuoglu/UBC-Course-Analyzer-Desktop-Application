@@ -69,9 +69,9 @@ the classes are using the same CourseList, so they used to have a CourseList par
 and instantiated it any time that we changed the page. However, there should be only a single instance of that class 
 because the CourseList is same throughout the execution of the program. Also, having a global point of access for that 
 single instance will make everything easier because that class will be used by many classes. So, to solve this problem,
-I applied Singleton Design Pattern to my CourseList class. Making this change also improves cohesion because now the
+I applied Singleton Design Pattern to my CourseList class. Making this change  improves cohesion because now the
 other GUI classes doesn't have to ensure that the CourseList is the same and its content doesn't change during the page
-transitions.
+transitions. 
 
 - CoursePage class is the GUI class that shows the details of a course like its name, average, and its data 
 visualizations. I noticed that this class also creates the data visualization panels and also handles and performs the 
@@ -82,8 +82,11 @@ following the Single Responsibility Principle.
      
 ### Instructions for Grader ###
 
-#### Demo Video For Guidance (For Phase 3) ####
-[![Demo Video](http://img.youtube.com/vi/ODAVOFRfm9I/0.jpg)](http://www.youtube.com/watch?v=ODAVOFRfm9I)
+#### Demo Video For Guidance ####
+[![Demo Video](http://img.youtube.com/vi/mv7jDfW8vRw/0.jpg)](https://youtu.be/mv7jDfW8vRw)
+
+- New feature: in the course page, now you can switch the graphs by using the switch graph button.
+
 - You can generate the loading a saved course list event by clicking the "Load Data From Previous Session" button.
 
 - You can save the given course list by clicking the "Save Course List" button under the saved courses overview panel.
