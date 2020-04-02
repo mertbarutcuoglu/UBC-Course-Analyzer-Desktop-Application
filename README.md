@@ -64,21 +64,23 @@ grades.
 
 ### Phase 4: Task 3 ###
 Identified Problems & Improvements :
--  CourseList class is used by all of the GUI classes other than the Main class which only has the welcome page. All of
-the classes are using the same CourseList, so they used to have a CourseList parameter in their constructor and pass it 
-and instantiated it any time that we changed the page. However, there should be only a single instance of that class 
-because the CourseList is same throughout the execution of the program. Also, having a global point of access for that 
-single instance will make everything easier because that class will be used by many classes. So, to solve this problem,
-I applied Singleton Design Pattern to my CourseList class. Making this change  improves cohesion because now the
-other GUI classes doesn't have to ensure that the CourseList is the same and its content doesn't change during the page
-transitions. 
-
 - CoursePage class is the GUI class that shows the details of a course like its name, average, and its data 
 visualizations. I noticed that this class also creates the data visualization panels and also handles and performs the 
 related tasks. This violates the Single Responsibility Principle, therefore it causes poor cohesion. To solve this issue 
 by improving cohesion, I created two new classes, FiveYearAverageGraph and GradeDistributionChart. These classes handle
 and perform the creation of the data visualization and the related tasks to this. Therefore, it improves cohesion by 
 following the Single Responsibility Principle.
+
+-  CourseList class is used by all of the GUI classes other than the Main class which only has the welcome page. All of
+the classes are using the same CourseList, so they used to have a CourseList parameter in their constructor and pass it 
+and instantiated it any time that we changed the page. However, there should be only a single instance of that class 
+because the CourseList is same throughout the execution of the program. Also, having a global point of access for that 
+single instance will make everything easier because that class will be used by many classes. Besides, this problem
+causes the classes to violate the Single Responsibility principle, and to have a low cohesion. The reason is, the classes
+that use CourseList class has to instantiate the course list, make sure that it is the same across all of the pages, and 
+have to pass the course list to the other pages. So, to solve this problem, I applied Singleton Design Pattern to my 
+CourseList class. Making this change  improves cohesion because now the other GUI classes doesn't have to ensure that 
+the CourseList is the same and its content don't change during the page transitions. 
      
 ### Instructions for Grader ###
 
