@@ -21,7 +21,7 @@ public class CourseListTest {
         Map<String, Integer> gradeDistributions = getGradeDistributionSample();
 
         testCourseList = CourseList.getInstance();
-        clearCourseList();
+        testCourseList.clear();// CourseList is the same across all classes, we have to clear it for other tests
 
         List<Double> courseAverages = new ArrayList<>();
         courseAverages.add(79.65);
@@ -45,31 +45,29 @@ public class CourseListTest {
 
     @Test
     public void testGetInstance() {
-        int courseListSize = testCourseList.getListOfCourses().size();
+        int courseListSize = testCourseList.size();
         assertEquals(0, courseListSize);
     }
 
     @Test
     public void addCourseOne() {
         testCourseList.addCourse(testCourse1);
-        List<Course> listOfCourses = testCourseList.getListOfCourses();
-        int courseListSize = listOfCourses.size();
+        int courseListSize = testCourseList.size();
         assertEquals(1, courseListSize);
-        assertTrue(listOfCourses.contains(testCourse1));
+        assertTrue(testCourseList.contains(testCourse1));
     }
 
     @Test
     public void removeCourseFromSingleItemList() {
         testCourseList.addCourse(testCourse1);
-        List<Course> listOfCourses = testCourseList.getListOfCourses();
 
-        int courseListSize = listOfCourses.size();
+        int courseListSize = testCourseList.size();
         assertEquals(1, courseListSize);
 
         testCourseList.removeCourse(0);
-        courseListSize = listOfCourses.size();
+        courseListSize = testCourseList.size();
         assertEquals(0, courseListSize);
-        assertFalse(listOfCourses.contains(testCourse1));
+        assertFalse(testCourseList.contains(testCourse1));
     }
 
     @Test
@@ -77,12 +75,11 @@ public class CourseListTest {
         testCourseList.addCourse(testCourse1);
         testCourseList.addCourse(testCourse2);
 
-        List<Course> listOfCourses = testCourseList.getListOfCourses();
-        int courseListSize = listOfCourses.size();
+        int courseListSize = testCourseList.size();
 
         assertEquals(2, courseListSize);
-        assertTrue(listOfCourses.contains(testCourse1));
-        assertTrue(listOfCourses.contains(testCourse2));
+        assertTrue(testCourseList.contains(testCourse1));
+        assertTrue(testCourseList.contains(testCourse2));
     }
 
 
@@ -91,19 +88,13 @@ public class CourseListTest {
     public void removeCourseFromMultipleItemList() {
         testCourseList.addCourse(testCourse1);
         testCourseList.addCourse(testCourse2);
-        List<Course> listOfCourses = testCourseList.getListOfCourses();
-        int courseListSize = listOfCourses.size();
+        int courseListSize = testCourseList.size();
         assertEquals(2, courseListSize);
 
         testCourseList.removeCourse(1);
-        courseListSize = listOfCourses.size();
-        assertEquals(courseListSize, 1);
-        assertFalse(listOfCourses.contains(testCourse2));
-    }
-
-    // since the CourseList is the same across all classes, removes everything for other class tests
-    public void clearCourseList() {
-        testCourseList.getListOfCourses().removeAll(testCourseList.getListOfCourses());
+        courseListSize = testCourseList.size();
+        assertEquals(1,courseListSize);
+        assertFalse(testCourseList.contains(testCourse2));
     }
 
     // EFFECTS: creates a sample grade distribution data for test purposes

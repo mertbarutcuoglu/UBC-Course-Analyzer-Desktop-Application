@@ -25,11 +25,11 @@ public class CourseTest {
 
         course = new Course("PHIL", "220", "005", profName, courseAverages, gradeDistributions);
         double courseAverage = (79.65 + 77.87 + 79.96) / 3.0;
-        assertEquals(course.getCourseID(), "PHIL");
-        assertEquals(course.getCourseNumber(), "220");
-        assertEquals(course.getCourseSection(), "005");
-        assertEquals(course.getProfName(), "ICHIKAWA, JONATHAN");
-        assertEquals(course.getCourseFiveYearAverage(), courseAverage) ;
+        assertEquals("PHIL", course.getCourseID());
+        assertEquals("220", course.getCourseNumber());
+        assertEquals("005", course.getCourseSection());
+        assertEquals("ICHIKAWA, JONATHAN",course.getProfName());
+        assertEquals(courseAverage, course.getCourseFiveYearAverage()) ;
         assertEquals(courseAverages, course.getCourseAveragesForYears());
         assertEquals(gradeDistributions, course.getGradeDistribution());
     }
@@ -50,11 +50,11 @@ public class CourseTest {
 
         course = new Course("CPSC", "121", "202", profName, courseAverages, gradeDistributions);
         double courseAverage = (69.65 + 71.87 + 72.96) / 3.0;
-        assertEquals(course.getCourseID(), "CPSC");
-        assertEquals(course.getCourseNumber(), "121");
-        assertEquals(course.getCourseSection(), "202");
-        assertEquals(course.getProfName(), "BELLEVILE, PATRICE");
-        assertEquals(course.getCourseFiveYearAverage(), courseAverage) ;
+        assertEquals("CPSC", course.getCourseID());
+        assertEquals("121", course.getCourseNumber());
+        assertEquals("202", course.getCourseSection());
+        assertEquals("BELLEVILE, PATRICE", course.getProfName());
+        assertEquals(courseAverage, course.getCourseFiveYearAverage()) ;
     }
 
     @Test

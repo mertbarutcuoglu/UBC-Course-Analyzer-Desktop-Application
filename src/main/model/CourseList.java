@@ -4,10 +4,11 @@ import persistence.Saveable;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 // Represents a course list having a list of courses.
-public class CourseList implements Saveable {
+public class CourseList implements Saveable, Iterable<Course> {
     private List<Course> listOfCourses;
     private static CourseList instance;
 
@@ -43,9 +44,20 @@ public class CourseList implements Saveable {
         return listOfCourses.get(index);
     }
 
-    // EFFECTS: returns the course list
-    public List<Course> getListOfCourses() {
-        return listOfCourses;
+    // EFFECTS: returns the total number of courses
+    public int size() {
+        return listOfCourses.size();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes all of the courses from the list
+    public void clear() {
+        listOfCourses.clear();
+    }
+
+    // EFFECTS: returns true if the given Course is in the list, otherwise returns false
+    public boolean contains(Course course) {
+        return listOfCourses.contains(course);
     }
 
     @Override
@@ -53,5 +65,10 @@ public class CourseList implements Saveable {
         for (Course course : listOfCourses) {
             course.save(printWriter);
         }
+    }
+
+    @Override
+    public Iterator<Course> iterator() {
+        return listOfCourses.iterator();
     }
 }

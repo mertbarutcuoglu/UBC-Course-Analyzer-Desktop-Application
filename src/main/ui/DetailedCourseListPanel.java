@@ -1,11 +1,8 @@
 package ui;
 
 import model.Course;
-import model.CourseList;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 // Panel for DetailedCourseList
 public class DetailedCourseListPanel extends CourseListPanel {
@@ -33,10 +30,9 @@ public class DetailedCourseListPanel extends CourseListPanel {
     }
 
     @Override
-    protected DefaultListModel setupCourseNamesList(CourseList courseList) {
+    protected DefaultListModel setupCourseNamesList() {
         DefaultListModel courseNames = new DefaultListModel();
-        List<Course> courses = courseList.getListOfCourses();
-        for (Course c: courses) {
+        for (Course c: courseList) {
             courseNames.addElement(c.getCourseFullName() + " " + c.getCourseFiveYearAverage());
         }
         return courseNames;

@@ -128,20 +128,20 @@ public class Course implements Saveable {
             fiveYearAverageString.add(averageString);
         }
 
-        String courseAsString = "[ course id: " + courseID + "; course number: " + courseNumber;
-        courseAsString = courseAsString + "; course section: " + courseSection + "; professor: " + profName;
+        StringBuilder courseString = new StringBuilder("[ course id: " + courseID + "; course number: " + courseNumber);
+        courseString.append("; course section: ").append(courseSection).append("; professor: ").append(profName);
         List<String> gradeRanges = createGradeRanges();
         for (String range: gradeRanges) {
-            courseAsString = courseAsString + ";  " + range + ": " + gradeDistributions.get(range);
+            courseString.append(";  ").append(range).append(": ").append(gradeDistributions.get(range));
         }
-        courseAsString = courseAsString + "; 2014 average: " + fiveYearAverageString.get(0);
-        courseAsString = courseAsString + "; 2015 average: " + fiveYearAverageString.get(1);
-        courseAsString = courseAsString + "; 2016 average: " + fiveYearAverageString.get(2);
-        courseAsString = courseAsString + "; 2017 average: " + fiveYearAverageString.get(3);
-        courseAsString = courseAsString + "; 2018 average: " + fiveYearAverageString.get(4);
-        courseAsString = courseAsString + "]";
+        courseString.append("; 2014 average: ").append(fiveYearAverageString.get(0));
+        courseString.append("; 2015 average: ").append(fiveYearAverageString.get(1));
+        courseString.append("; 2016 average: ").append(fiveYearAverageString.get(2));
+        courseString.append("; 2017 average: ").append(fiveYearAverageString.get(3));
+        courseString.append("; 2018 average: ").append(fiveYearAverageString.get(4));
+        courseString.append("]");
 
-        return courseAsString;
+        return courseString.toString();
     }
 
     @Override

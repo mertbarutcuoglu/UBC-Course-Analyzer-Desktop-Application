@@ -11,19 +11,20 @@ import java.util.List;
 
 // Panel that displays saved courses
 public class CourseListPanel extends JPanel  implements ActionListener {
-    private DefaultListModel courseNames;
     protected JList courseNamesList;
+    protected CourseList courseList;
+
+    private DefaultListModel courseNames;
     private JScrollPane courseNamesScrollPane;
     protected JLabel descriptionLabel;
     protected JPanel optionButtonsPanel;
     private JButton removeCourseButton;
-    private CourseList courseList;
 
     // MODIFIES: this
     // EFFECTS: constructs the panel for the given courseList
     public CourseListPanel() {
         this.courseList = CourseList.getInstance();
-        courseNames = setupCourseNamesList(courseList);
+        courseNames = setupCourseNamesList();
         setLayout(new BorderLayout());
 
         // panel for buttons in the bottom of the content panel
@@ -53,10 +54,9 @@ public class CourseListPanel extends JPanel  implements ActionListener {
     }
 
     // EFFECTS: creates a DefaultListModel from given CourseList
-    protected DefaultListModel setupCourseNamesList(CourseList courseList) {
+    protected DefaultListModel setupCourseNamesList() {
         DefaultListModel courseNames = new DefaultListModel();
-        List<Course>  courses = courseList.getListOfCourses();
-        for (Course c: courses) {
+        for (Course c: courseList) {
             courseNames.addElement(c.getCourseFullName());
         }
         return courseNames;

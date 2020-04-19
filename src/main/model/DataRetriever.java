@@ -41,14 +41,14 @@ public class DataRetriever {
     public String getResponseAsStringFromURL(String url) throws IOException {
         sendGetRequest(url);
         URL clientURL = new URL(url);
-        String response = "";
+        StringBuilder response = new StringBuilder();
 
         Scanner scanner = new Scanner(clientURL.openStream());
         while (scanner.hasNext()) {
-            response = response + scanner.nextLine();
+            response.append(scanner.nextLine());
         }
         scanner.close();
-        return response;
+        return response.toString();
     }
 
     // REQUIRES: active internet connection

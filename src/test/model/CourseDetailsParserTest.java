@@ -25,7 +25,7 @@ public class CourseDetailsParserTest {
     @Test
     public void testParseAverageNoErrors() {
         File jsonFile = new File("./data/json/2018W_PHIL_220.json");
-        String response = "";
+        StringBuilder response = new StringBuilder();
 
         Scanner scanner = null;
         try {
@@ -35,7 +35,7 @@ public class CourseDetailsParserTest {
         }
 
         while (scanner.hasNext()) {
-            response = response + scanner.nextLine();
+            response.append(scanner.nextLine());
         }
         scanner.close();
         List<Double> expectedAverages = new ArrayList<>();
@@ -44,17 +44,17 @@ public class CourseDetailsParserTest {
 
         List<Double> averages = new ArrayList<>();
         try {
-            averages = parser.parseAverage(response, "ICHIKAWA, JONATHAN");
+            averages = parser.parseAverage(response.toString(), "ICHIKAWA, JONATHAN");
         } catch (ParseException e) {
             fail("Parsing error!");
         }
-        assertEquals(averages, expectedAverages);
+        assertEquals(expectedAverages, averages);
     }
 
     @Test
     public void testParseAverageWithInvalidJSONResponse(){
         File jsonFile = new File("./data/json/invalidJSONResponse.json");
-        String response = "";
+        StringBuilder response = new StringBuilder();
 
         Scanner scanner = null;
         try {
@@ -64,12 +64,12 @@ public class CourseDetailsParserTest {
         }
 
         while (scanner.hasNext()) {
-            response = response + scanner.nextLine();
+            response.append(scanner.nextLine());
         }
         scanner.close();
 
         try {
-            List<Double> averages = parser.parseAverage(response, "ICHIKAWA, JONATHAN");
+            List<Double> averages = parser.parseAverage(response.toString(), "ICHIKAWA, JONATHAN");
             fail("Didn't catch the exception!");
         } catch (ParseException e) {
             System.out.println("Catched the ParseException!");
@@ -79,7 +79,7 @@ public class CourseDetailsParserTest {
     @Test
     public void testParseProfNameWithNoError() {
         File htmlPageFile = new File("./data/html/cpsc121_202.html");
-        String htmlPageString = null;
+        StringBuilder htmlPageString = new StringBuilder();
 
         Scanner scanner = null;
         try {
@@ -89,7 +89,7 @@ public class CourseDetailsParserTest {
         }
 
         while (scanner.hasNext()) {
-            htmlPageString = htmlPageString + scanner.nextLine();
+            htmlPageString.append(scanner.nextLine());
         }
         scanner.close();
 
@@ -100,7 +100,7 @@ public class CourseDetailsParserTest {
         client.getOptions().setJavaScriptEnabled(false);
 
         MockWebConnection connection = new MockWebConnection();
-        connection.setDefaultResponse(htmlPageString);
+        connection.setDefaultResponse(htmlPageString.toString());
 
         client.setWebConnection(connection);
         HtmlPage page = null; // url is a placeholder, response will be the file
@@ -110,13 +110,13 @@ public class CourseDetailsParserTest {
             fail("IOException occured!");
         }
         String profName = parser.parseProfName(page);
-        assertEquals(profName, "BELLEVILLE, PATRICE");
+        assertEquals("BELLEVILLE, PATRICE", profName);
     }
 
     @Test
     public void testParseGradeDistributionWithNoErrors() {
         File jsonFile = new File("./data/json/2018W_PHIL_220.json");
-        String response = "";
+        StringBuilder response = new StringBuilder();
 
         Scanner scanner = null;
         try {
@@ -126,23 +126,23 @@ public class CourseDetailsParserTest {
         }
 
         while (scanner.hasNext()) {
-            response = response + scanner.nextLine();
+            response.append(scanner.nextLine());
         }
         scanner.close();
 
         Map<String, Integer> gradeDistributions = new LinkedHashMap<>();
         try {
-            parser.parseGradeDistribution(response, "ICHIKAWA, JONATHAN", gradeDistributions);
+            parser.parseGradeDistribution(response.toString(), "ICHIKAWA, JONATHAN", gradeDistributions);
         } catch (ParseException e) {
             fail("Parsing error!");
         }
-        assertEquals(getGradeDistributionSample(), gradeDistributions);
+        assertEquals(gradeDistributions, getGradeDistributionSample());
     }
 
     @Test
     public void testParseGradeDistributionWithInvalidJSONResponse(){
         File jsonFile = new File("./data/json/invalidJSONResponse.json");
-        String response = "";
+        StringBuilder response = new StringBuilder();
 
         Scanner scanner = null;
         try {
@@ -152,12 +152,12 @@ public class CourseDetailsParserTest {
         }
 
         while (scanner.hasNext()) {
-            response = response + scanner.nextLine();
+            response.append(scanner.nextLine());
         }
         scanner.close();
         Map<String, Integer> gradeDistributions = new LinkedHashMap<>();
         try {
-            parser.parseGradeDistribution(response, "ICHIKAWA, JONATHAN", gradeDistributions);
+            parser.parseGradeDistribution(response.toString(), "ICHIKAWA, JONATHAN", gradeDistributions);
             fail("Didn't catch the exception!");
         } catch (ParseException e) {
             System.out.println("Catched the ParseException!");

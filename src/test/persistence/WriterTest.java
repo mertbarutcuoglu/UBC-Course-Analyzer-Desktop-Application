@@ -51,7 +51,7 @@ public class WriterTest {
                 course2Averages, gradeDistributions);
 
         testList = CourseList.getInstance();
-        clearCourseList();
+        testList.clear(); // CourseList is the same across all classes, we have to clear it for other tests
         testList.addCourse(course1);
         testList.addCourse(course2);
     }
@@ -109,11 +109,6 @@ public class WriterTest {
         gradeDistributions.put("85-89%", 9);
         gradeDistributions.put("90-100%", 10);
         return gradeDistributions;
-    }
-
-    // since the CourseList is the same across all classes, removes everything for other class tests
-    private void clearCourseList() {
-        testList.getListOfCourses().removeAll(testList.getListOfCourses());
     }
 
 

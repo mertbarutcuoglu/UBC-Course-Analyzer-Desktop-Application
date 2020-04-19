@@ -23,7 +23,7 @@ public class ReaderTest {
     void testReadACoursesSuccess() {
         try {
             courses = CourseList.getInstance();
-            clearCourseList();
+            courses.clear(); // since the CourseList is the same across all classes, we have to clear it for other tests
             courses = Reader.readCourses(new File("./data/txt/testCourseListToRead.txt"));
 
             Course testCourse1 = courses.getCourse(0);
@@ -61,10 +61,6 @@ public class ReaderTest {
         gradeDistributions.put("85-89%", 9);
         gradeDistributions.put("90-100%", 10);
         return gradeDistributions;
-    }
-    // since the CourseList is the same across all classes, removes everything for other class tests
-    private void clearCourseList() {
-        courses.getListOfCourses().removeAll(courses.getListOfCourses());
     }
 
 }
